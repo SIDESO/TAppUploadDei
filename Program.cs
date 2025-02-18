@@ -14,6 +14,15 @@ namespace TappUploadDei
         Sending = 4
     }
 
+    // interface
+    interface TappValidation
+    {
+        public void ValidateParamInitial();
+
+        public void GetVersion();
+    }
+
+
 
 
 
@@ -27,8 +36,40 @@ namespace TappUploadDei
         {
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
+
+            Application.SetUnhandledExceptionMode(UnhandledExceptionMode.ThrowException);
+
             ApplicationConfiguration.Initialize();
-            Application.Run(new FormSelectApp());
+
+            var sentryOptions = new SentryOptions
+            {
+
+                // Tells which project in Sentry to send events to:
+                Dsn = "https://e4cdeac9989376f915e74c403ac87363@o4505348454744064.ingest.sentry.io/4505703081443328",
+
+                // When configuring for the first time, to see what the SDK is doing:
+                Debug = true,
+
+                // Set traces_sample_rate to 1.0 to capture 100% of transactions for tracing.
+                // We recommend adjusting this value in production.
+                //TracesSampleRate = 1.0,
+
+                // Enable Global Mode since this is a client app
+                IsGlobalModeEnabled = true,
+
+                //TODO: any other options you need go here
+
+                Release = "TAppUploadDei@1.0.4",
+            };
+
+            using (SentrySdk.Init(sentryOptions))
+            {
+                Application.Run(new FormSelectApp());
+            }
+
         }
+
+
+
     }
 }

@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "TAppCargaArchivosDei"
-#define MyAppVersion "1.0.1"
+#define MyAppVersion "1.0.4"
 #define MyAppPublisher "SIDESO S.A.S."
 #define MyAppURL "https://www.sideso.com.co"
 

@@ -73,6 +73,14 @@ namespace TappUploadDei
         [JsonProperty("command_application")]
         public string CommandApplication { get; set; }
 
+        //data es un json con metadata de la deteccion
+        [JsonProperty("data")]
+        public string Data { get; set; }
+
+        //document_upload_id
+        [JsonProperty("document_upload_id")]
+        public string DocumentUploadId { get; set; }
+
 
         public Dei(
             string licensePlate,
@@ -86,7 +94,9 @@ namespace TappUploadDei
             string detailPhoto,
             string maxSpeed,
             string capturedSpeed,
-            string commandApplication
+            string commandApplication,
+            string documentUploadId,
+            string data
 
             )
         {
@@ -102,6 +112,8 @@ namespace TappUploadDei
             MaxSpeed = maxSpeed ?? "";
             CapturedSpeed = capturedSpeed ?? "";
             Result = "Pendiente";
+            DocumentUploadId = documentUploadId ?? "";
+            Data = data;
 
             Date = DateTime.ParseExact(_DateStr, FormatDate, null);
 
@@ -110,8 +122,6 @@ namespace TappUploadDei
             CommandApplication = commandApplication;
 
         }
-
-
 
         public string json()
         {

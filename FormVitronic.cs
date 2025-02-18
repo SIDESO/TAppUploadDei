@@ -8,7 +8,7 @@ namespace TappUploadDei
 {
 
 
-    public partial class FormMainVitronic : Form
+    public partial class FormMainVitronic : Form, TappValidation
     {
 
         string? url = null;
@@ -20,6 +20,8 @@ namespace TappUploadDei
         int countUpload = 0;
         int countError = 0;
         private HttpClient httpClient = new HttpClient();
+        private readonly string ProductVersionApp = Application.ProductVersion.Split("+")[0];
+        private readonly string commandApplication = "VI";
 
 
         public FormMainVitronic()
@@ -42,41 +44,11 @@ namespace TappUploadDei
         }
 
 
-        public void DataGridDei()
-        {
-            DataGridViewDeis.AutoGenerateColumns = false;
-            DataGridViewDeis.DataSource = bindingSourceDei;
-
-
-            DataGridViewDeis.Columns.Add(ColumnDataGrid("Result", "Result", "Resultado"));
-            DataGridViewDeis.Columns.Add(ColumnDataGrid("DateStr", "DateStr", "Fecha"));
-            DataGridViewDeis.Columns.Add(ColumnDataGrid("InfractionCode", "InfractionCode", "Código"));
-            DataGridViewDeis.Columns.Add(ColumnDataGrid("PanoramicPhotoName", "PanoramicPhotoName", "Foto Panoramica"));
-            DataGridViewDeis.Columns.Add(ColumnDataGrid("DetailPhotoName", "DetailPhotoName", "Foto Detalle"));
-            DataGridViewDeis.Columns.Add(ColumnDataGrid("MaxSpeed", "MaxSpeed", "Velocidad Máxima"));
-            DataGridViewDeis.Columns.Add(ColumnDataGrid("CapturedSpeed", "CapturedSpeed", "Velocidad Capturada"));
-
-
-        }
-
-        public DataGridViewColumn ColumnDataGrid(string dataPropertyName, string name, string headerText)
-        {
-            DataGridViewColumn column = new DataGridViewTextBoxColumn();
-            column.DataPropertyName = dataPropertyName;
-            column.Name = name;
-            column.HeaderText = headerText;
-            column.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            return column;
-        }
-
-
-
         /**
          * validate the parameters and boot the application
          */
-        private void ValidateParamInitial()
+        public void ValidateParamInitial()
         {
-
 
             try
             {
@@ -113,7 +85,7 @@ namespace TappUploadDei
                     this.Close();
                 }
 
-                this.Text = this.Text + userName;
+                this.Text = this.Text + "V " + ProductVersionApp + " _ " + userName;
 
             }
             catch (Exception ex)
@@ -127,11 +99,102 @@ namespace TappUploadDei
             httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "Bearer " + accessToken);
             httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Accept", "application/json");
 
+            //obtener la version de la aplicacion
+            GetVersion();
+
             //obtener los puntos de detección y configurar el grid
             GetAsyncPoints();
             DataGridDei();
 
         }
+
+        /**
+         * obtenter la version de la aplicacion desde el servidor
+         */
+        public void GetVersion()
+        {
+            try
+            {
+                httpClient.GetAsync(endPoint + "/windows_app_api_version/FilesVitronic").ContinueWith(response =>
+                {
+                    try
+                    {
+                        var result = response.Result;
+                        var content = result.Content.ReadAsStringAsync().Result;
+                        if (result.StatusCode != HttpStatusCode.OK)
+                        {
+                            MessageBox.Show("Error al obtener la versión de la aplicación, no se pudo conectar con el servidor", "Error");
+                            this.Close();
+                        }
+
+                        if (content == null || content == String.Empty)
+                        {
+                            MessageBox.Show("No se obtuvo la versión de la aplicación", "Error");
+                            this.Close();
+                        }
+
+                        string get_version = content ?? "";
+
+
+                        if (get_version != ProductVersionApp)
+                        {
+                            MessageBox.Show("La versión de la aplicación no coincide con la versión del servidor", "Error");
+                            this.Invoke((MethodInvoker)delegate
+                            {
+                                this.Close();
+                            });
+                        }
+
+                    }
+                    catch (Exception ex)
+                    {
+                        this.Invoke((MethodInvoker)delegate
+                        {
+                            MessageBox.Show("Error al obtener la versión de la aplicación, no se pudo conectar con el servidor", "Error");
+                            this.Close();
+                        });
+                    }
+
+                });
+
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al obtener la versión de la aplicación, no se pudo conectar con el servidor", "Error");
+                this.Close();
+            }
+
+        }
+
+        public void DataGridDei()
+        {
+            DataGridViewDeis.AutoGenerateColumns = false;
+            DataGridViewDeis.DataSource = bindingSourceDei;
+
+
+            DataGridViewDeis.Columns.Add(ColumnDataGrid("Result", "Result", "Resultado"));
+            DataGridViewDeis.Columns.Add(ColumnDataGrid("DateStr", "DateStr", "Fecha"));
+            DataGridViewDeis.Columns.Add(ColumnDataGrid("InfractionCode", "InfractionCode", "Código"));
+            DataGridViewDeis.Columns.Add(ColumnDataGrid("PanoramicPhotoName", "PanoramicPhotoName", "Foto Panoramica"));
+            DataGridViewDeis.Columns.Add(ColumnDataGrid("DetailPhotoName", "DetailPhotoName", "Foto Detalle"));
+            DataGridViewDeis.Columns.Add(ColumnDataGrid("MaxSpeed", "MaxSpeed", "Velocidad Máxima"));
+            DataGridViewDeis.Columns.Add(ColumnDataGrid("CapturedSpeed", "CapturedSpeed", "Velocidad Capturada"));
+
+
+        }
+
+        public DataGridViewColumn ColumnDataGrid(string dataPropertyName, string name, string headerText)
+        {
+            DataGridViewColumn column = new DataGridViewTextBoxColumn();
+            column.DataPropertyName = dataPropertyName;
+            column.Name = name;
+            column.HeaderText = headerText;
+            column.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            return column;
+        }
+
+
         /**
          * Obtener los puntos de detección desde el servidor
          */
@@ -185,7 +248,7 @@ namespace TappUploadDei
         /**
          * Process the XML file
         */
-        private void ProcessFilesFolder()
+        private async void ProcessFilesFolder()
         {
 
             string path = this.textBoxPathFolder.Text;
@@ -296,9 +359,6 @@ namespace TappUploadDei
 
                         */
                 //
-                //leer el contenido
-                XmlDocument xml_document = new XmlDocument();
-                xml_document.Load(file);
 
                 string? dateTimeStr = "";
                 string? panoramic_photo_name = "";
@@ -308,9 +368,12 @@ namespace TappUploadDei
                 string? pathPanoramicPhoto = "";
                 string? pathDetailPhoto = "";
 
+                //leer el contenido
+                XmlDocument xml_document = new XmlDocument();
+                xml_document.Load(file);
                 XmlNodeList nodes = xml_document.GetElementsByTagName("case");
-
                 XmlNode? caseNode = nodes[0];
+
 
                 if (caseNode != null)
                 {
@@ -318,35 +381,56 @@ namespace TappUploadDei
 
                     //tomar los nodos de las imagenes
                     XmlNodeList nodeImages = xml_document.GetElementsByTagName("image");
-                    if (nodeImages != null)
+
+                    if (nodeImages == null)
                     {
-                        XmlNode? panoramic_photo = nodeImages[0] ?? null;
-                        XmlNode? detail_photo = nodeImages[1] ?? null;
+                        return;
+                    }
 
-                        //validar que existan las imagenes
-                        if (panoramic_photo == null || detail_photo == null)
+                    foreach (XmlNode node in nodeImages)
+                    {
+
+                        string? targetDesc = node?.Attributes["targetDesc"]?.Value;
+
+                        //sla foto panoramica debe contener targetDesc = r
+                        if (targetDesc == "r")
                         {
-                            return;
+                            panoramic_photo_name = node["fileName"]?.InnerText;
                         }
-
-
-                        panoramic_photo_name = panoramic_photo["fileName"]?.InnerText;
-                        detail_photo_name = detail_photo["fileName"]?.InnerText;
-
-                        if (panoramic_photo_name == null || detail_photo_name == null)
+                        else if (targetDesc == "lp_r" || targetDesc == "va_r")
                         {
-                            return;
+                            detail_photo_name = node["fileName"]?.InnerText;
                         }
+                    }
 
-                        //path con el archivo de la imagen
-                        pathPanoramicPhoto = Path.Combine(path, panoramic_photo_name);
-                        pathDetailPhoto = Path.Combine(path, detail_photo_name);
+                    if (panoramic_photo_name == null || detail_photo_name == null)
+                    {
+                        return;
+                    }
 
+                    //path con el archivo de la imagen
+                    pathPanoramicPhoto = Path.Combine(path, panoramic_photo_name);
+                    pathDetailPhoto = Path.Combine(path, detail_photo_name);
+
+                    //tomar el nodo de la velocidad
+                    string vehicleType = xml_document.GetElementsByTagName("vehicle")[0]["type"]?.InnerText;
+
+                    if (vehicleType == null)
+                    {
+                        return;
+                    }
+                    XmlNode? causeSpeeding = null;
+
+                    if (vehicleType == "car")
+                    {
+                        causeSpeeding = xml_document.GetElementsByTagName("causeSpeeding")[0] ?? null;
+                    }
+                    else if (vehicleType == "lorry")
+                    {
+                        causeSpeeding = xml_document.GetElementsByTagName("causeSpeeding")[1] ?? null;
                     }
 
 
-                    //tomar el nodo de la velocidad
-                    XmlNode? causeSpeeding = xml_document.GetElementsByTagName("causeSpeeding")[0] ?? null;
                     if (causeSpeeding != null)
                     {
 
@@ -381,15 +465,21 @@ namespace TappUploadDei
                     detailPhoto: pathDetailPhoto,
                     maxSpeed: max_speed,
                     capturedSpeed: captured_speed,
-                    commandApplication: "VI" //vitronic
+                    commandApplication: this.commandApplication,
+                    documentUploadId: "",
+                    data: ""
                     );
 
                 //agregar el objeto al binding source
-                int deiIndex = bindingSourceDei.Add(d);
+                bindingSourceDei.Add(d);
 
             }
 
             this.labelTotalFiles.Text = totalFilesXml.ToString();
+
+            await StoreFileUploadDeiAsync();
+
+
         }
 
 
@@ -415,35 +505,43 @@ namespace TappUploadDei
             //recorrer la lista de deis
             foreach (Dei d in bindingSourceDei)
             {
-                if (d.Status == (int)Status.Success || d.Status == (int)Status.Sending)
+                try
                 {
-                    continue;
+                    if (d.Status == (int)Status.Success || d.Status == (int)Status.Sending)
+                    {
+                        continue;
+                    }
+
+
+                    int deiIndex = bindingSourceDei.IndexOf(d);
+                    d.PointId = point.Id;
+                    d.Status = (int)Status.Sending;
+                    d.Result = "Enviando...";
+                    bindingSourceDei.ResetItem(deiIndex);
+
+
+                    //esperar a que se envie el dei y espera a que se complete
+                    await StoreDeiAsync(d, deiIndex).ConfigureAwait(false);
+
+
+
+
+
+
                 }
-
-
-                int deiIndex = bindingSourceDei.IndexOf(d);
-                d.PointId = point.Id;
-                d.Status = (int)Status.Sending;
-                d.Result = "Enviando...";
-                bindingSourceDei.ResetItem(deiIndex);
-
-
-                //esperar a que se envie el dei y espera a que se complete
-                await StoreDeiAsync(d, deiIndex).ConfigureAwait(false);
+                catch (Exception ex)
+                {
+                    d.Status = (int)Status.Error;
+                    d.Result = "ERROR: " + ex.Message;
+                }
 
             }
 
             var errors_count = bindingSourceDei.Cast<Dei>().Where(d => d.Status == (int)Status.Error).Count();
-
             if (errors_count > 0)
             {
                 BtnResendDeis();
             }
-            else
-            {
-                this.buttonUploadData.Text = "Cargar datos";
-            }
-
         }
 
         /**
@@ -459,70 +557,177 @@ namespace TappUploadDei
 
             StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            // Send a request asynchronously continue when complete
-            using (HttpResponseMessage response = await httpClient.PostAsync(url, content))
+            try
             {
-                try
+
+                // Send a request asynchronously continue when complete
+                using (HttpResponseMessage response = await httpClient.PostAsync(url, content))
                 {
-                    // Check for success or throw exception
-                    string contentResponse = await response.Content.ReadAsStringAsync();
-
-                    if (response.IsSuccessStatusCode)
+                    try
                     {
-                        var definition = new { mensaje = "", dei_id = "" };
-                        var data = JsonConvert.DeserializeAnonymousType(contentResponse, definition);
+                        // Check for success or throw exception
+                        string contentResponse = await response.Content.ReadAsStringAsync();
 
-                        this.Invoke((MethodInvoker)delegate
+                        if (response.IsSuccessStatusCode)
                         {
-                            d.Result = data.dei_id;
-                            d.Status = (int)Status.Success;
+                            var definition = new { mensaje = "", dei_id = "" };
+                            var data = JsonConvert.DeserializeAnonymousType(contentResponse, definition);
 
-                            bindingSourceDei.ResetItem(deiIndex);
+                            this.Invoke((MethodInvoker)delegate
+                            {
+                                d.Result = data.dei_id;
+                                d.Status = (int)Status.Success;
 
-                            this.labelFilesLoad.Text = (++countUpload).ToString();
+                                bindingSourceDei.ResetItem(deiIndex);
 
-                        });
+                                this.labelFilesLoad.Text = (++countUpload).ToString();
+
+                            });
+                        }
+                        else if (response.StatusCode != HttpStatusCode.OK)
+                        {
+
+                            string data = JsonConvert.ToString(contentResponse);
+
+                            this.Invoke((MethodInvoker)delegate
+                            {
+                                d.Result = "ERROR: " + response.StatusCode + " " + data;
+                                bindingSourceDei.ResetItem(deiIndex);
+                                this.labelFilesError.Text = (++countError).ToString();
+
+
+                            });
+
+                        }
+
+                        else
+                        {
+                            this.Invoke((MethodInvoker)delegate
+                            {
+                                d.Result = "ERROR: " + response.StatusCode;
+                                bindingSourceDei.ResetItem(deiIndex);
+                                this.labelFilesError.Text = (++countError).ToString();
+
+                            });
+                        }
                     }
-                    else if (response.StatusCode != HttpStatusCode.OK)
-                    {
-
-                        string data = JsonConvert.ToString(contentResponse);
-
-                        this.Invoke((MethodInvoker)delegate
-                        {
-                            d.Result = "ERROR: " + response.StatusCode + " " + data;
-                            bindingSourceDei.ResetItem(deiIndex);
-                            this.labelFilesError.Text = (++countError).ToString();
-
-
-                        });
-
-                    }
-
-                    else
+                    catch (Exception ex)
                     {
                         this.Invoke((MethodInvoker)delegate
                         {
-                            d.Result = "ERROR: " + response.StatusCode;
+                            d.Result = "ERROR" + ex.Message;
                             bindingSourceDei.ResetItem(deiIndex);
                             this.labelFilesError.Text = (++countError).ToString();
 
                         });
                     }
                 }
-                catch (Exception ex)
+            }
+            catch (Exception ex)
+            {
+                this.Invoke((MethodInvoker)delegate
                 {
-                    this.Invoke((MethodInvoker)delegate
-                    {
-                        d.Result = "ERROR" + ex.Message;
-                        bindingSourceDei.ResetItem(deiIndex);
-                        this.labelFilesError.Text = (++countError).ToString();
+                    d.Result = "ERROR :" + ex.Message;
+                    bindingSourceDei.ResetItem(deiIndex);
+                    this.labelFilesError.Text = (++countError).ToString();
+                });
 
-                    });
-                }
             }
         }
 
+
+        /**
+          * Crear un registro para asociar todos los dei de la misma carpeta
+        */
+        private async Task StoreFileUploadDeiAsync()
+        {
+            string path = this.textBoxPathFolder.Text;
+            if (path == null || path == String.Empty)
+            {
+                MessageBox.Show("No se ha seleccionado una carpeta", "Error");
+                return;
+            }
+
+            string url = endPoint + "/windows_apps_api_dei/file_upload_dei_store";
+
+            //quitar todo lo que este antes de :
+            string file_name = path.Substring(path.IndexOf(":\\") + 2).Replace("\\", "|");
+
+
+            //colocar el path en forma q_3 ,total_rows
+
+            //el commad aplication y el campo de el path
+            string json = "{\"command_application\":\"" + this.commandApplication + "\",\"file_name\":\"" + file_name + "\",\"total_rows\":" + bindingSourceDei.Count + "}";
+
+            StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            try
+            {
+
+                // Send a request asynchronously continue when complete
+                using (HttpResponseMessage response = await httpClient.PostAsync(url, content))
+                {
+                    try
+                    {
+                        // Check for success or throw exception
+                        string contentResponse = await response.Content.ReadAsStringAsync();
+
+                        if (response.IsSuccessStatusCode)
+                        {
+
+                            this.Invoke((MethodInvoker)delegate
+                            {
+                                var definition = new { id = "" };
+                                var data = JsonConvert.DeserializeAnonymousType(contentResponse, definition);
+
+                                //actualizar todas las deis con el document_upload_id
+                                foreach (Dei d in bindingSourceDei)
+                                {
+                                    d.DocumentUploadId = data.id;
+                                }
+
+                            });
+                        }
+                        else
+                        {
+
+                            MessageBox.Show("No se pudo crear la agrupación de los archivos", "Error");
+                            this.Invoke((MethodInvoker)delegate
+                            {
+                                this.Close();
+
+                            });
+
+                        }
+
+
+                    }
+                    catch (Exception ex)
+                    {
+                        this.Invoke((MethodInvoker)delegate
+                        {
+
+
+                            MessageBox.Show("Error al crear la agrupación de los archivos " + ex.Message, "Error");
+                            this.Invoke((MethodInvoker)delegate
+                            {
+                                this.Close();
+
+                            });
+
+                        });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al crear la agrupación de los archivos " + ex.Message, "Error");
+                this.Invoke((MethodInvoker)delegate
+                {
+                    this.Close();
+                });
+            }
+        }
 
         private void buttonSearchFolder_Click(object sender, EventArgs e)
         {
@@ -553,8 +758,9 @@ namespace TappUploadDei
         }
 
 
-        private void textBoxPathFolder_TextChanged(object sender, EventArgs e)
+        private async void textBoxPathFolder_TextChanged(object sender, EventArgs e)
         {
+
             ProcessFilesFolder();
             EnableControls();
         }
