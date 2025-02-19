@@ -23,6 +23,34 @@ namespace TappUploadDei
     }
 
 
+    public static class DateTimeExtensions
+    {
+        // Convert datetime to UNIX time
+        public static string ToUnixTime(this DateTime dateTime)
+        {
+            DateTimeOffset dto = new DateTimeOffset(dateTime.ToUniversalTime());
+            return dto.ToUnixTimeSeconds().ToString();
+        }
+
+        // Convert datetime to UNIX time including miliseconds
+        public static string ToUnixTimeMilliSeconds(this DateTime dateTime)
+        {
+            DateTimeOffset dto = new DateTimeOffset(dateTime.ToUniversalTime());
+            return dto.ToUnixTimeMilliseconds().ToString();
+        }
+
+        public static DateTime StartOfDay(this DateTime theDate)
+        {
+            return theDate.Date;
+        }
+
+        public static DateTime EndOfDay(this DateTime theDate)
+        {
+            return theDate.Date.AddDays(1).AddTicks(-1);
+        }
+    }
+
+
 
 
 

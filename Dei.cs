@@ -81,6 +81,14 @@ namespace TappUploadDei
         [JsonProperty("document_upload_id")]
         public string DocumentUploadId { get; set; }
 
+        //id externo
+        [JsonProperty("external_id")]
+        public string ExternalId { get; set; }
+
+        //camara id
+        [JsonProperty("camera_id")]
+        public string CameraId { get; set; }
+
 
         public Dei(
             string licensePlate,
@@ -96,7 +104,9 @@ namespace TappUploadDei
             string capturedSpeed,
             string commandApplication,
             string documentUploadId,
-            string data
+            string data,
+            string externalId = "",
+            string cameraId = ""
 
             )
         {
@@ -120,6 +130,9 @@ namespace TappUploadDei
             Status = (int)TappUploadDei.Status.Pending;
 
             CommandApplication = commandApplication;
+
+            ExternalId = externalId;
+            CameraId = cameraId;
 
         }
 

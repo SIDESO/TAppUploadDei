@@ -53,6 +53,7 @@
             buttonGdsExport.TabIndex = 1;
             buttonGdsExport.Text = "Exportar eventos GDS";
             buttonGdsExport.UseVisualStyleBackColor = true;
+            buttonGdsExport.Click += buttonGdsExport_Click;
             // 
             // button1
             // 
