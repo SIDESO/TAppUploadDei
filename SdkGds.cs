@@ -28,6 +28,8 @@ namespace TappUploadDei
 
             private readonly string userName = formGds.userNameGds;
 
+            private readonly string commandApplication = formGds.commandApplication;
+
             readonly FormGds formGds = formGds;
 
             private BindingSource bindingSourceDei = formGds.bindingSourceDei;
@@ -180,7 +182,7 @@ namespace TappUploadDei
                 string id = "";
                 string plate = "";
                 string date = "";
-                string max_speed = "";
+                string captured_speed = "";
                 string serial = "";
                 string data = "";
                 string resultado = "OK";
@@ -200,7 +202,7 @@ namespace TappUploadDei
                     id = record[51]?.ToString();
                     plate = record[105]?.ToString();
                     date = record[0]?.ToString();
-                    max_speed = record[101]?.ToString();
+                    captured_speed = record[101]?.ToString();
                     serial = record[99]?.ToString();
                     attachments_str = JsonConvert.SerializeObject(record[71]);
                     attachments_ids = record[71] as object[];
@@ -219,13 +221,40 @@ namespace TappUploadDei
                     id = record[71].ToString();
                     plate = record[98]?.ToString();
                     date = record[5]?.ToString();
-                    max_speed = record[121]?.ToString();
+                    captured_speed = record[121]?.ToString();
                     serial = record[119]?.ToString();
                     attachments_str = JsonConvert.SerializeObject(record[91]);
                     attachments_ids = record[91] as object[];
 
                 }
 
+                //la fecha viene en formato timestamp
+                DateTime dateTime = DateTimeOffset.FromUnixTimeMilliseconds(long.Parse(date)).DateTime;
+
+                string dateTimeStr = dateTime.ToString("dd/MM/yyyy HH:mm");
+
+                string FormatDate = "yyyy-MM-dd HH:mm:ss";
+
+                Dei dei = new Dei(
+                       licensePlate: plate,
+                       date: dateTimeStr,
+                       formatDate: FormatDate,
+                       infractionCode: "C29",
+                       pointId: "",
+                       panoramicVideo: "",
+                       detailVideo: "",
+                       panoramicPhoto: "",
+                       detailPhoto: "",
+                       capturedSpeed: captured_speed,
+                       commandApplication: this.commandApplication,
+                       documentUploadId: "",
+                       data: "",
+                       externalId: id,
+                       cameraId: serial
+                   );
+
+                //agregar el objeto al binding source
+                bindingSourceDei.Add(dei);
 
 
                 //crear la data que se va a enviar a transito app
@@ -248,29 +277,12 @@ namespace TappUploadDei
                 {
                     foreach (var attachment_id in attachments_ids)
                     {
-                        //getAttachment(attachment_id.ToString(), dei.event_id);
+                        if (attachment_id != null)
+                        {
+                            getAttachment(attachment_id.ToString(), dei.ExternalId);
+                        }
                     }
                 }
-
-                //agregar a la lista de deis
-                //list_deis.Add(dei);
-
-
-                ////se agrega a la lista de deis  en la tabla de la interfaz
-                //formGds.Invoke((MethodInvoker)delegate
-                //{
-                //    int index = formGds.dataGridDeis.Rows.Add(
-                //        dei.event_id,
-                //        dei.license_plate,
-                //        dei.date,
-                //        dei.max_speed,
-                //        dei.camera_serial,
-                //        dei.resultado,
-                //        "",
-                //        dei.attachments_str
-                //       );
-
-                //});
 
 
             }
@@ -348,10 +360,10 @@ namespace TappUploadDei
             {
 
                 //si no existe el cliente, no hacer nada
-                //if (!client.Value.IsConnected)
-                //{
-                //    return "Cliente no conectado";
-                //}
+                if (!client.Value.IsConnected)
+                {
+                    return "Cliente no conectado";
+                }
 
                 //limpiar el binding source
                 formGds.Invoke((MethodInvoker)delegate
@@ -378,8 +390,6 @@ namespace TappUploadDei
 
 
                 //convertir las fechas en timestamp
-
-
 
                 //crear y realizar la consulta
                 string query = "SELECT * FROM multi_event WHERE \"@timestamp\" >= " + start_date + " AND \"@timestamp\" <= " + end_date + " LIMIT " + limit;

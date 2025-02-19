@@ -91,38 +91,38 @@ namespace TappUploadDei
 
 
         public Dei(
-            string licensePlate,
-            string date,
-            string formatDate,
             string infractionCode,
-            string pointId,
-            string panoramicVideo,
-            string detailVideo,
-            string panoramicPhoto,
-            string detailPhoto,
-            string maxSpeed,
-            string capturedSpeed,
-            string commandApplication,
-            string documentUploadId,
-            string data,
+             string date = "",
+            string licensePlate = "",
+            string formatDate = "",
+            string pointId = "",
+            string panoramicVideo = "",
+            string detailVideo = "",
+            string panoramicPhoto = "",
+            string detailPhoto = "",
+            string maxSpeed = "",
+            string capturedSpeed = "",
+            string commandApplication = "",
+            string documentUploadId = "",
+            string data = "",
             string externalId = "",
             string cameraId = ""
 
             )
         {
-            LicensePlate = licensePlate ?? "";
-            string _DateStr = date ?? "";
+            LicensePlate = licensePlate;
+            string _DateStr = date;
             string FormatDate = formatDate ?? "yyyyMMddHmmss";
             InfractionCode = infractionCode;
-            PointId = pointId ?? "";
-            PanoramicVideo = panoramicVideo ?? "";
-            DetailVideo = detailVideo ?? "";
+            PointId = pointId;
+            PanoramicVideo = panoramicVideo;
+            DetailVideo = detailVideo;
             PanoramicPhoto = panoramicPhoto;
             DetailPhoto = detailPhoto;
-            MaxSpeed = maxSpeed ?? "";
-            CapturedSpeed = capturedSpeed ?? "";
+            MaxSpeed = maxSpeed;
+            CapturedSpeed = capturedSpeed;
             Result = "Pendiente";
-            DocumentUploadId = documentUploadId ?? "";
+            DocumentUploadId = documentUploadId;
             Data = data;
 
             Date = DateTime.ParseExact(_DateStr, FormatDate, null);

@@ -21,7 +21,7 @@ namespace GDSExtractor
         int countError = 0;
         private HttpClient httpClient = new HttpClient();
         private readonly string ProductVersionApp = Application.ProductVersion.Split("+")[0];
-        private readonly string commandApplication = "GDS";
+        public readonly string commandApplication = "GDS";
 
         public TestListener listener;
 
@@ -87,7 +87,7 @@ namespace GDSExtractor
             AsyncGDSClient client = AsyncGDSClient.GetBuilder()
                 .WithListener(listener)
                 .WithTimeout(10000)
-                .WithUserName(this.userName)
+                .WithUserName(this.userNameGds)
                 .WithURI(this.uriGds)
                 .WithPingPongInterval(10000)
                 .Build();
