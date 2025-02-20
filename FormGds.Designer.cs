@@ -49,11 +49,9 @@ namespace GDSExtractor
             textBoxLimit = new System.Windows.Forms.TextBox();
             infoConection = new Label();
             DataGridViewDeis = new DataGridView();
-            panel2 = new Panel();
             panel1.SuspendLayout();
             panelGetEvents.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)DataGridViewDeis).BeginInit();
-            panel2.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
@@ -193,26 +191,18 @@ namespace GDSExtractor
             DataGridViewDeis.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             DataGridViewDeis.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             DataGridViewDeis.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            DataGridViewDeis.Location = new Point(3, 3);
+            DataGridViewDeis.Location = new Point(7, 152);
             DataGridViewDeis.Name = "DataGridViewDeis";
             DataGridViewDeis.RowHeadersWidth = 51;
-            DataGridViewDeis.Size = new Size(1374, 462);
+            DataGridViewDeis.Size = new Size(1385, 477);
             DataGridViewDeis.TabIndex = 0;
-            // 
-            // panel2
-            // 
-            panel2.Controls.Add(DataGridViewDeis);
-            panel2.Location = new Point(7, 152);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(1385, 570);
-            panel2.TabIndex = 1;
             // 
             // FormGds
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1404, 734);
-            Controls.Add(panel2);
+            Controls.Add(DataGridViewDeis);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
@@ -225,7 +215,6 @@ namespace GDSExtractor
             panelGetEvents.ResumeLayout(false);
             panelGetEvents.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)DataGridViewDeis).EndInit();
-            panel2.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -244,7 +233,6 @@ namespace GDSExtractor
         private Panel panel1;
         public Label infoConection;
         public DataGridView DataGridViewDeis;
-        private Panel panel2;
         private DateTimePicker dateTimeStartDate;
         private DateTimePicker dateTimeEndDate;
         private Label line;
