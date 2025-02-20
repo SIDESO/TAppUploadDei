@@ -154,7 +154,15 @@ namespace TappUploadDei
     {
         public override void WriteJson(JsonWriter writer, string value, JsonSerializer serializer)
         {
-            writer.WriteValue(Convert.ToBase64String(File.ReadAllBytes(value)));
+            if (!string.IsNullOrEmpty(value))
+            {
+                writer.WriteValue(Convert.ToBase64String(File.ReadAllBytes(value)));
+            }
+            else
+            {
+                writer.WriteValue("");
+
+            }
         }
 
         public override string ReadJson(JsonReader reader, Type objectType, string existingValue, bool hasExistingValue, JsonSerializer serializer)
