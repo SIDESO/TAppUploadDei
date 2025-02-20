@@ -251,16 +251,6 @@ namespace GDSExtractor
             DataGridViewDeis.Columns.Add(ColumnDataGrid("CameraId", "CameraId", "CameraId"));
             DataGridViewDeis.Columns.Add(ColumnDataGrid("Result", "Result", "Resultado"));
 
-            //agregar las columnas al datagrid
-            this.DataGridViewDeis.Columns.Add("id", "ID del evento");
-            this.DataGridViewDeis.Columns.Add("plate", "Placa");
-            this.DataGridViewDeis.Columns.Add("date", "Fecha");
-            this.DataGridViewDeis.Columns.Add("max_speed", "Velocidad");
-            this.DataGridViewDeis.Columns.Add("camera", "Camara");
-            this.DataGridViewDeis.Columns.Add("resultado", "Resultado");
-            this.DataGridViewDeis.Columns.Add("msg_id", "uuuid mensaje");
-            this.DataGridViewDeis.Columns.Add("attachments", "Adjuntos");
-
 
         }
 
