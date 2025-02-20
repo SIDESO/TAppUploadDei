@@ -167,6 +167,9 @@ namespace GDSExtractor
             //obtener la version de la aplicacion
             this.GetVersion();
 
+            //llenar el grid
+            DataGridDei();
+
 
 
 
