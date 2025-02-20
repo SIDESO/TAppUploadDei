@@ -22,27 +22,27 @@ namespace TappUploadDei
 
         //video panoramico path
         [JsonConverter(typeof(FileNameConverter)), JsonProperty("panoramic_video")]
-        public string PanoramicVideo { get; }
+        public string PanoramicVideo { get; set; }
 
         //video detalle path
         [JsonConverter(typeof(FileNameConverter)), JsonProperty("detail_video")]
-        public string DetailVideo { get; }
+        public string DetailVideo { get; set; }
 
         //foto panoramica path
         [JsonConverter(typeof(ImageConverter)), JsonProperty("panoramic_photo_b64")]
-        public string PanoramicPhoto { get; }
+        public string PanoramicPhoto { get; set; }
 
         //foto detalle path
         [JsonConverter(typeof(ImageConverter)), JsonProperty("detail_photo_b64")]
-        public string DetailPhoto { get; }
+        public string DetailPhoto { get; set; }
 
         //velocidad maxima permitida
         [JsonProperty("max_speed")]
-        public string MaxSpeed { get; }
+        public string MaxSpeed { get; set; }
 
         //velocidad capturada
         [JsonProperty("captured_speed")]
-        public string CapturedSpeed { get; }
+        public string CapturedSpeed { get; set; }
 
         //resultado en la tabla
         [property: JsonIgnore]
@@ -89,6 +89,10 @@ namespace TappUploadDei
         [JsonProperty("camera_id")]
         public string CameraId { get; set; }
 
+        //nombre de adjuntos
+        [JsonProperty("attachments_str")]
+        public string AttachmentsStr { get; set; }
+
 
         public Dei(
             string infractionCode,
@@ -106,7 +110,8 @@ namespace TappUploadDei
             string documentUploadId = "",
             string data = "",
             string externalId = "",
-            string cameraId = ""
+            string cameraId = "",
+            string attachmentsStr = ""
 
             )
         {
@@ -133,6 +138,8 @@ namespace TappUploadDei
 
             ExternalId = externalId;
             CameraId = cameraId;
+
+            AttachmentsStr = attachmentsStr;
 
         }
 

@@ -62,14 +62,14 @@ namespace GDSExtractor
             panel1.Controls.Add(infoConection);
             panel1.Location = new Point(7, 3);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1385, 143);
+            panel1.Size = new Size(1183, 143);
             panel1.TabIndex = 0;
             // 
             // buttonReconnectClient
             // 
-            buttonReconnectClient.Location = new Point(18, 100);
+            buttonReconnectClient.Location = new Point(5, 75);
             buttonReconnectClient.Name = "buttonReconnectClient";
-            buttonReconnectClient.Size = new Size(182, 29);
+            buttonReconnectClient.Size = new Size(124, 53);
             buttonReconnectClient.TabIndex = 13;
             buttonReconnectClient.Text = "Reconectar cliente GDS";
             buttonReconnectClient.UseVisualStyleBackColor = true;
@@ -96,7 +96,7 @@ namespace GDSExtractor
             panelGetEvents.Controls.Add(dateTimeEndDate);
             panelGetEvents.Controls.Add(label2);
             panelGetEvents.Controls.Add(textBoxLimit);
-            panelGetEvents.Location = new Point(341, 53);
+            panelGetEvents.Location = new Point(141, 41);
             panelGetEvents.Name = "panelGetEvents";
             panelGetEvents.Size = new Size(1041, 87);
             panelGetEvents.TabIndex = 10;
@@ -114,7 +114,7 @@ namespace GDSExtractor
             // 
             dateTimeStartDate.Location = new Point(3, 33);
             dateTimeStartDate.Name = "dateTimeStartDate";
-            dateTimeStartDate.Size = new Size(311, 27);
+            dateTimeStartDate.Size = new Size(308, 27);
             dateTimeStartDate.TabIndex = 0;
             // 
             // label3
@@ -194,14 +194,14 @@ namespace GDSExtractor
             DataGridViewDeis.Location = new Point(7, 152);
             DataGridViewDeis.Name = "DataGridViewDeis";
             DataGridViewDeis.RowHeadersWidth = 51;
-            DataGridViewDeis.Size = new Size(1385, 477);
+            DataGridViewDeis.Size = new Size(1183, 358);
             DataGridViewDeis.TabIndex = 0;
             // 
             // FormGds
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1404, 734);
+            ClientSize = new Size(1197, 734);
             Controls.Add(DataGridViewDeis);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.FixedSingle;
@@ -209,7 +209,7 @@ namespace GDSExtractor
             MaximizeBox = false;
             Name = "FormGds";
             RightToLeftLayout = true;
-            Text = "Extractor Gds - TApp";
+            Text = "TApp";
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             panelGetEvents.ResumeLayout(false);

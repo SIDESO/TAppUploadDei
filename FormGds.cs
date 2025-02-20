@@ -26,6 +26,8 @@ namespace GDSExtractor
 
         public TestListener listener;
 
+        public readonly string pathImagesGds = @"c:\ATTACHMENTS_GDS_TAPP";
+
         //get endpoint
         public string GetEndpoint()
         {
@@ -55,22 +57,20 @@ namespace GDSExtractor
             ValidateParamInitial();
 
 
-            //crear el directorio de imagenes
-            // Specify the directory you want to manipulate.
-            string path = @"c:\images_gds";
-
             try
             {
                 // Determine whether the directory exists.
-                if (!Directory.Exists(path))
+                if (!Directory.Exists(pathImagesGds))
                 {
-                    Directory.CreateDirectory(path);
+                    Directory.CreateDirectory(pathImagesGds);
                 }
 
             }
             catch (Exception e)
             {
-                Console.WriteLine("The process failed: {0}", e.ToString());
+                MessageBox.Show("No se pudo crear el directorio de archivos adjuntos " + e.Message, "Error");
+                this.Close();
+                return;
 
             }
 
@@ -244,12 +244,12 @@ namespace GDSExtractor
             DataGridViewDeis.Columns.Add(ColumnDataGrid("ExternalId", "ExternalId", "Id del evento"));
             DataGridViewDeis.Columns.Add(ColumnDataGrid("LicensePlate", "LicensePlate", "Placa"));
             DataGridViewDeis.Columns.Add(ColumnDataGrid("DateStr", "DateStr", "Fecha"));
-            DataGridViewDeis.Columns.Add(ColumnDataGrid("PanoramicPhotoName", "PanoramicPhotoName", "Foto Panoramica"));
-            DataGridViewDeis.Columns.Add(ColumnDataGrid("DetailPhotoName", "DetailPhotoName", "Foto Detalle"));
+            DataGridViewDeis.Columns.Add(ColumnDataGrid("AttachmentsStr", "AttachmentsStr", "Fotos"));
             DataGridViewDeis.Columns.Add(ColumnDataGrid("MaxSpeed", "MaxSpeed", "Velocidad Máxima"));
             DataGridViewDeis.Columns.Add(ColumnDataGrid("CapturedSpeed", "CapturedSpeed", "Velocidad Capturada"));
             DataGridViewDeis.Columns.Add(ColumnDataGrid("CameraId", "CameraId", "CameraId"));
             DataGridViewDeis.Columns.Add(ColumnDataGrid("Result", "Result", "Resultado"));
+
 
 
         }

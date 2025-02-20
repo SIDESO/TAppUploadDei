@@ -343,7 +343,8 @@ namespace TappUploadDei
                        pointId: "",
                        panoramicVideo: "",
                        detailVideo: "",
-                       panoramicPhoto: attachments_str,
+                       panoramicPhoto: "",
+                       attachmentsStr: attachments_str,
                        detailPhoto: "",
                        capturedSpeed: captured_speed,
                        commandApplication: this.commandApplication,
@@ -447,10 +448,36 @@ namespace TappUploadDei
             {
 
                 //descargar el archivo
-                string path = Path.Combine("C:\\images_gds\\", event_id + "___" + attachmentId + ".jpg");
+                string path = Path.Combine(this.formGds.pathImagesGds, event_id + "___" + attachmentId + ".jpg");
 
 
                 File.WriteAllBytes(path, attachment);
+
+                //asignar la ruta del archivo al la dei
+                this.formGds.Invoke((MethodInvoker)delegate
+                   {
+                    Dei? dei = formGds.bindingSourceDei.Cast<Dei>().FirstOrDefault(x => x.ExternalId == event_id);
+
+                    if (dei != null)
+                    {
+                        if (dei.DetailPhoto == null || dei.DetailPhoto == "")
+                        {
+                            dei.DetailPhoto = path;
+                            return;
+                        }
+
+                        if (dei.PanoramicPhoto == null || dei.PanoramicPhoto == "")
+                        {
+                            dei.PanoramicPhoto = path;
+                            return;
+
+                        }
+
+                    });
+
+
+
+
             }
 
             /**
