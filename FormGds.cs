@@ -288,10 +288,9 @@ namespace GDSExtractor
         {
             int limit = 0;
 
-
-            if (this.textBoxLimit.Text == null || this.textBoxLimit.Text == String.Empty)
+            if (this.textBoxLimit.Text != null && this.textBoxLimit.Text != String.Empty)
             {
-                limit = 10;
+                limit = int.Parse(this.textBoxLimit.Text);
             }
 
             //sttart date

@@ -394,7 +394,12 @@ namespace TappUploadDei
                 //convertir las fechas en timestamp
 
                 //crear y realizar la consulta
-                string query = "SELECT * FROM multi_event WHERE \"@timestamp\" >= " + start_date + " AND \"@timestamp\" <= " + end_date + " LIMIT " + limit;
+                string query = "SELECT * FROM multi_event WHERE \"@timestamp\" >= " + start_date + " AND \"@timestamp\" <= " + end_date;
+
+                if (limit == 0)
+                {
+                    query = query + " LIMIT " + limit;
+                }
 
                 client.Value.SendQueryRequest10(query, ConsistencyType.NONE, 10000L);
 
