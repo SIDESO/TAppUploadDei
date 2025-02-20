@@ -49,6 +49,13 @@ namespace GDSExtractor
             textBoxLimit = new System.Windows.Forms.TextBox();
             infoConection = new Label();
             DataGridViewDeis = new DataGridView();
+            buttonExportEvents = new System.Windows.Forms.Button();
+            labelTotalEventos = new Label();
+            labelCountTotalEventos = new Label();
+            labelEvtExport = new Label();
+            labelEvtExported = new Label();
+            labelEvtConError = new Label();
+            labelEvtWithError = new Label();
             panel1.SuspendLayout();
             panelGetEvents.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)DataGridViewDeis).BeginInit();
@@ -67,9 +74,10 @@ namespace GDSExtractor
             // 
             // buttonReconnectClient
             // 
-            buttonReconnectClient.Location = new Point(5, 75);
+            buttonReconnectClient.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            buttonReconnectClient.Location = new Point(5, 41);
             buttonReconnectClient.Name = "buttonReconnectClient";
-            buttonReconnectClient.Size = new Size(124, 53);
+            buttonReconnectClient.Size = new Size(124, 86);
             buttonReconnectClient.TabIndex = 13;
             buttonReconnectClient.Text = "Reconectar cliente GDS";
             buttonReconnectClient.UseVisualStyleBackColor = true;
@@ -194,14 +202,89 @@ namespace GDSExtractor
             DataGridViewDeis.Location = new Point(7, 152);
             DataGridViewDeis.Name = "DataGridViewDeis";
             DataGridViewDeis.RowHeadersWidth = 51;
-            DataGridViewDeis.Size = new Size(1183, 358);
+            DataGridViewDeis.Size = new Size(1183, 495);
             DataGridViewDeis.TabIndex = 0;
+            // 
+            // buttonExportEvents
+            // 
+            buttonExportEvents.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            buttonExportEvents.Location = new Point(853, 666);
+            buttonExportEvents.Name = "buttonExportEvents";
+            buttonExportEvents.Size = new Size(337, 56);
+            buttonExportEvents.TabIndex = 1;
+            buttonExportEvents.Text = "Exportar Eventos a Transito App";
+            buttonExportEvents.UseVisualStyleBackColor = true;
+            buttonExportEvents.Click += buttonExportEvents_Click;
+            // 
+            // labelTotalEventos
+            // 
+            labelTotalEventos.AutoSize = true;
+            labelTotalEventos.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelTotalEventos.Location = new Point(31, 674);
+            labelTotalEventos.Name = "labelTotalEventos";
+            labelTotalEventos.Size = new Size(107, 20);
+            labelTotalEventos.TabIndex = 2;
+            labelTotalEventos.Text = "Total eventos ";
+            // 
+            // labelCountTotalEventos
+            // 
+            labelCountTotalEventos.AutoSize = true;
+            labelCountTotalEventos.Location = new Point(61, 694);
+            labelCountTotalEventos.Name = "labelCountTotalEventos";
+            labelCountTotalEventos.Size = new Size(17, 20);
+            labelCountTotalEventos.TabIndex = 3;
+            labelCountTotalEventos.Text = "0";
+            // 
+            // labelEvtExport
+            // 
+            labelEvtExport.AutoSize = true;
+            labelEvtExport.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelEvtExport.Location = new Point(204, 674);
+            labelEvtExport.Name = "labelEvtExport";
+            labelEvtExport.Size = new Size(147, 20);
+            labelEvtExport.TabIndex = 4;
+            labelEvtExport.Text = "Eventos exportados";
+            // 
+            // labelEvtExported
+            // 
+            labelEvtExported.AutoSize = true;
+            labelEvtExported.Location = new Point(261, 694);
+            labelEvtExported.Name = "labelEvtExported";
+            labelEvtExported.Size = new Size(17, 20);
+            labelEvtExported.TabIndex = 5;
+            labelEvtExported.Text = "0";
+            // 
+            // labelEvtConError
+            // 
+            labelEvtConError.AutoSize = true;
+            labelEvtConError.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelEvtConError.Location = new Point(388, 674);
+            labelEvtConError.Name = "labelEvtConError";
+            labelEvtConError.Size = new Size(132, 20);
+            labelEvtConError.TabIndex = 6;
+            labelEvtConError.Text = "Eventos con error";
+            // 
+            // labelEvtWithError
+            // 
+            labelEvtWithError.AutoSize = true;
+            labelEvtWithError.Location = new Point(443, 694);
+            labelEvtWithError.Name = "labelEvtWithError";
+            labelEvtWithError.Size = new Size(17, 20);
+            labelEvtWithError.TabIndex = 7;
+            labelEvtWithError.Text = "0";
             // 
             // FormGds
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1197, 734);
+            Controls.Add(labelEvtWithError);
+            Controls.Add(labelEvtConError);
+            Controls.Add(labelEvtExported);
+            Controls.Add(labelEvtExport);
+            Controls.Add(labelCountTotalEventos);
+            Controls.Add(labelTotalEventos);
+            Controls.Add(buttonExportEvents);
             Controls.Add(DataGridViewDeis);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.FixedSingle;
@@ -216,6 +299,7 @@ namespace GDSExtractor
             panelGetEvents.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)DataGridViewDeis).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         private void textBoxLimit_KeyPress(object sender, KeyPressEventArgs e)
@@ -245,5 +329,12 @@ namespace GDSExtractor
         private Label labelReposnseBtnGetEvents;
         private Label label4;
         private System.Windows.Forms.Button buttonReconnectClient;
+        private System.Windows.Forms.Button buttonExportEvents;
+        private Label labelTotalEventos;
+        private Label labelCountTotalEventos;
+        private Label labelEvtExport;
+        private Label labelEvtExported;
+        private Label labelEvtConError;
+        private Label labelEvtWithError;
     }
 }

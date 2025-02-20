@@ -187,133 +187,133 @@ namespace TappUploadDei
                 /*
                  * 
                  KeyValuePair`2;KeyValuePair`2.Key;KeyValuePair`2.Value
-[@timestamp, 1732977786000];@timestamp;1732977786000
-[@to_valid, 9223372036854775807];@to_valid;9223372036854775807
-[@ttl, 9223372036854775807];@ttl;9223372036854775807
-[@@version, 2,3/2];@@version;2
-[action_eval_state, ];action_eval_state;""
-[action_eval_sub_states, ];action_eval_sub_states;""
-[action_groups, ];action_groups;""
-[action_rules, ];action_rules;""
-[action_type, ];action_type;""
-[actions, ];actions;""
-[adr_bgcolor, ];adr_bgcolor;""
-[adr_color, ];adr_color;""
-[adr_confidence, ];adr_confidence;""
-[adr_frame, ];adr_frame;""
-[adr_text, ];adr_text;""
-[adr_type, ];adr_type;""
-[all_carriage_id, ];all_carriage_id;""
-[anpr_bgcolor, ];anpr_bgcolor;""
-[anpr_color, ];anpr_color;""
-[average_speed, ];average_speed;""
-[average_speed_benchmark, ];average_speed_benchmark;""
-[average_speed_result_state, ];average_speed_result_state;""
-[avg_calc_state, ];avg_calc_state;""
-[avs_section_name, ];avs_section_name;""
-[axles_hauler, ];axles_hauler;""
-[axles_trailer, ];axles_trailer;""
-[belt_confidence, ];belt_confidence;""
-[belt_result, ];belt_result;""
-[carriage_id, ];carriage_id;""
-[category, 410];category;410
-[country_long, ];country_long;""
-[deleted_attachments, ];deleted_attachments;""
-[description, ];description;""
-[detector, ];detector;""
-[device, speedcam];device;speedcam
-[device_speed, ];device_speed;""
-[direction, -1];direction;-1
-[entry_device_id, ];entry_device_id;""
-[entry_device_name, ];entry_device_name;""
-[entry_location_id, ];entry_location_id;""
-[entry_location_name, ];entry_location_name;""
-[event_id_section_entry, ];event_id_section_entry;""
-[event_type, ];event_type;""
-[extra_data, ];extra_data;""
-[extra_image, ];extra_image;""
-[front_cut_image, ];front_cut_image;""
-[front_plate_image, ];front_plate_image;""
-[gds_user_hook_state, ];gds_user_hook_state;""
-[geo_point, POINT (0.000000 0.000000)];geo_point;"POINT (0.000000 0.000000)"
-[group_id, ];group_id;""
-[height, ];height;""
-[id, GDSI241130144306000_120ccae_205];id;GDSI241130144306000_120ccae_205
-[images, ];images;""
-[images_section_entry, ];images_section_entry;""
-[lane_id, ];lane_id;""
-[latitude, 0];latitude;0
-[left_images, ];left_images;""
-[length, ];length;""
-[location, SIMUT SAS ];location;"SIMUT SAS "
-[longitude, 0];longitude;0
-[measure_point, S1-TEST];measure_point;S1-TEST
-[mmr_category, ];mmr_category;""
-[mmr_category_confidence, 0];mmr_category_confidence;0
-[mmr_color, ];mmr_color;""
-[mmr_color_confidence, 0];mmr_color_confidence;0
-[mmr_make, ];mmr_make;""
-[mmr_model, ];mmr_model;""
-[mmr_model_confidence, 0];mmr_model_confidence;0
-[mmr_submodel, ];mmr_submodel;""
-[nationality, ];nationality;""
-[ntp_status, ];ntp_status;""
-[overview_image, System.Object[]];overview_image;System.Object[]
-[overview_plate_image, ];overview_plate_image;""
-[pax_compound, ];pax_compound;""
-[pax_confidence, ];pax_confidence;""
-[pax_front, ];pax_front;""
-[pax_rear, ];pax_rear;""
-[pax_total, ];pax_total;""
-[plate, ];plate;""
-[plate_confidence, ];plate_confidence;""
-[plate_confidence_rear, ];plate_confidence_rear;""
-[plate_frame, ];plate_frame;""
-[rear_country_long, ];rear_country_long;""
-[rear_cut_image, ];rear_cut_image;""
-[rear_nationality, ];rear_nationality;""
-[rear_plate, ];rear_plate;""
-[rear_plate_image, ];rear_plate_image;""
-[rear_state_long, ];rear_state_long;""
-[rear_state_short, ];rear_state_short;""
-[reason, ];reason;""
-[relation_id, ];relation_id;""
-[request_ids, ];request_ids;""
-[right_images, ];right_images;""
-[s1_description, test];s1_description;test
-[s1_event_type, SEBK];s1_event_type;SEBK
-[s1_location, test];s1_location;test
-[s1_operator, admin];s1_operator;admin
-[section_length, ];section_length;""
-[section_tolerance, ];section_tolerance;""
-[source, 120ccae];source;120ccae
-[speed, 0];speed;0
-[speed_limit_passenger, 50];speed_limit_passenger;50
-[speed_limit_ratio, 0];speed_limit_ratio;0
-[speed_limit_truck, 50];speed_limit_truck;50
-[speed_penalty_limit_passenger, 50];speed_penalty_limit_passenger;50
-[speed_penalty_limit_truck, 50];speed_penalty_limit_truck;50
-[speeder, True];speeder;True
-[state_long, ];state_long;""
-[state_short, ];state_short;""
-[store_timestamp, ];store_timestamp;""
-[strip_image, ];strip_image;""
-[target, ];target;""
-[target_details, ];target_details;""
-[target_failed, ];target_failed;""
-[timestamp, 1732977786000];timestamp;1732977786000
-[timestamp_section_entry, ];timestamp_section_entry;""
-[timestamp_section_exit, ];timestamp_section_exit;""
-[tolerance, ];tolerance;""
-[train_direction, ];train_direction;""
-[transaction_closed, ];transaction_closed;""
-[transaction_id, ];transaction_id;""
-[transition_time, ];transition_time;""
-[type, Sebesség túllépés - kézi];type;"Sebesség túllépés - kézi"
-[vehicle_type, HEAVY];vehicle_type;HEAVY
-[video, ];video;""
-[videos_section_entry, ];videos_section_entry;""
-[width, ];width;""
+                        [@timestamp, 1732977786000];@timestamp;1732977786000
+                        [@to_valid, 9223372036854775807];@to_valid;9223372036854775807
+                        [@ttl, 9223372036854775807];@ttl;9223372036854775807
+                        [@@version, 2,3/2];@@version;2
+                        [action_eval_state, ];action_eval_state;""
+                        [action_eval_sub_states, ];action_eval_sub_states;""
+                        [action_groups, ];action_groups;""
+                        [action_rules, ];action_rules;""
+                        [action_type, ];action_type;""
+                        [actions, ];actions;""
+                        [adr_bgcolor, ];adr_bgcolor;""
+                        [adr_color, ];adr_color;""
+                        [adr_confidence, ];adr_confidence;""
+                        [adr_frame, ];adr_frame;""
+                        [adr_text, ];adr_text;""
+                        [adr_type, ];adr_type;""
+                        [all_carriage_id, ];all_carriage_id;""
+                        [anpr_bgcolor, ];anpr_bgcolor;""
+                        [anpr_color, ];anpr_color;""
+                        [average_speed, ];average_speed;""
+                        [average_speed_benchmark, ];average_speed_benchmark;""
+                        [average_speed_result_state, ];average_speed_result_state;""
+                        [avg_calc_state, ];avg_calc_state;""
+                        [avs_section_name, ];avs_section_name;""
+                        [axles_hauler, ];axles_hauler;""
+                        [axles_trailer, ];axles_trailer;""
+                        [belt_confidence, ];belt_confidence;""
+                        [belt_result, ];belt_result;""
+                        [carriage_id, ];carriage_id;""
+                        [category, 410];category;410
+                        [country_long, ];country_long;""
+                        [deleted_attachments, ];deleted_attachments;""
+                        [description, ];description;""
+                        [detector, ];detector;""
+                        [device, speedcam];device;speedcam
+                        [device_speed, ];device_speed;""
+                        [direction, -1];direction;-1
+                        [entry_device_id, ];entry_device_id;""
+                        [entry_device_name, ];entry_device_name;""
+                        [entry_location_id, ];entry_location_id;""
+                        [entry_location_name, ];entry_location_name;""
+                        [event_id_section_entry, ];event_id_section_entry;""
+                        [event_type, ];event_type;""
+                        [extra_data, ];extra_data;""
+                        [extra_image, ];extra_image;""
+                        [front_cut_image, ];front_cut_image;""
+                        [front_plate_image, ];front_plate_image;""
+                        [gds_user_hook_state, ];gds_user_hook_state;""
+                        [geo_point, POINT (0.000000 0.000000)];geo_point;"POINT (0.000000 0.000000)"
+                        [group_id, ];group_id;""
+                        [height, ];height;""
+                        [id, GDSI241130144306000_120ccae_205];id;GDSI241130144306000_120ccae_205
+                        [images, ];images;""
+                        [images_section_entry, ];images_section_entry;""
+                        [lane_id, ];lane_id;""
+                        [latitude, 0];latitude;0
+                        [left_images, ];left_images;""
+                        [length, ];length;""
+                        [location, SIMUT SAS ];location;"SIMUT SAS "
+                        [longitude, 0];longitude;0
+                        [measure_point, S1-TEST];measure_point;S1-TEST
+                        [mmr_category, ];mmr_category;""
+                        [mmr_category_confidence, 0];mmr_category_confidence;0
+                        [mmr_color, ];mmr_color;""
+                        [mmr_color_confidence, 0];mmr_color_confidence;0
+                        [mmr_make, ];mmr_make;""
+                        [mmr_model, ];mmr_model;""
+                        [mmr_model_confidence, 0];mmr_model_confidence;0
+                        [mmr_submodel, ];mmr_submodel;""
+                        [nationality, ];nationality;""
+                        [ntp_status, ];ntp_status;""
+                        [overview_image, System.Object[]];overview_image;System.Object[]
+                        [overview_plate_image, ];overview_plate_image;""
+                        [pax_compound, ];pax_compound;""
+                        [pax_confidence, ];pax_confidence;""
+                        [pax_front, ];pax_front;""
+                        [pax_rear, ];pax_rear;""
+                        [pax_total, ];pax_total;""
+                        [plate, ];plate;""
+                        [plate_confidence, ];plate_confidence;""
+                        [plate_confidence_rear, ];plate_confidence_rear;""
+                        [plate_frame, ];plate_frame;""
+                        [rear_country_long, ];rear_country_long;""
+                        [rear_cut_image, ];rear_cut_image;""
+                        [rear_nationality, ];rear_nationality;""
+                        [rear_plate, ];rear_plate;""
+                        [rear_plate_image, ];rear_plate_image;""
+                        [rear_state_long, ];rear_state_long;""
+                        [rear_state_short, ];rear_state_short;""
+                        [reason, ];reason;""
+                        [relation_id, ];relation_id;""
+                        [request_ids, ];request_ids;""
+                        [right_images, ];right_images;""
+                        [s1_description, test];s1_description;test
+                        [s1_event_type, SEBK];s1_event_type;SEBK
+                        [s1_location, test];s1_location;test
+                        [s1_operator, admin];s1_operator;admin
+                        [section_length, ];section_length;""
+                        [section_tolerance, ];section_tolerance;""
+                        [source, 120ccae];source;120ccae
+                        [speed, 0];speed;0
+                        [speed_limit_passenger, 50];speed_limit_passenger;50
+                        [speed_limit_ratio, 0];speed_limit_ratio;0
+                        [speed_limit_truck, 50];speed_limit_truck;50
+                        [speed_penalty_limit_passenger, 50];speed_penalty_limit_passenger;50
+                        [speed_penalty_limit_truck, 50];speed_penalty_limit_truck;50
+                        [speeder, True];speeder;True
+                        [state_long, ];state_long;""
+                        [state_short, ];state_short;""
+                        [store_timestamp, ];store_timestamp;""
+                        [strip_image, ];strip_image;""
+                        [target, ];target;""
+                        [target_details, ];target_details;""
+                        [target_failed, ];target_failed;""
+                        [timestamp, 1732977786000];timestamp;1732977786000
+                        [timestamp_section_entry, ];timestamp_section_entry;""
+                        [timestamp_section_exit, ];timestamp_section_exit;""
+                        [tolerance, ];tolerance;""
+                        [train_direction, ];train_direction;""
+                        [transaction_closed, ];transaction_closed;""
+                        [transaction_id, ];transaction_id;""
+                        [transition_time, ];transition_time;""
+                        [type, Sebesség túllépés - kézi];type;"Sebesség túllépés - kézi"
+                        [vehicle_type, HEAVY];vehicle_type;HEAVY
+                        [video, ];video;""
+                        [videos_section_entry, ];videos_section_entry;""
+                        [width, ];width;""
 
 
                  
@@ -441,7 +441,10 @@ namespace TappUploadDei
             }
 
             /**
-             * escribir el adjunto en disco
+             * escribir el adjunto en disco y asignar la ruta a la dei
+             * @param attachment adjunto
+             * @param attachmentId id del adjunto
+             * @param event_id id del evento
              * 
              */
             private void WriteAttachment(byte[] attachment, string attachmentId, string event_id)
@@ -472,6 +475,8 @@ namespace TappUploadDei
                                return;
 
                            }
+
+                           formGds.bindingSourceDei.ResetItem(this.formGds.bindingSourceDei.IndexOf(dei));
                        }
 
                    });
@@ -493,6 +498,12 @@ namespace TappUploadDei
             {
 
                 //si no existe el cliente, no hacer nada
+                //si no existe el cliente, no hacer nada
+                if (!client.Value.IsConnected)
+                {
+                    return "Cliente no conectado";
+                }
+
 
                 //limpiar el binding source
                 formGds.Invoke((MethodInvoker)delegate
@@ -545,6 +556,11 @@ namespace TappUploadDei
                     if (client.Value.IsConnected)
                     {
                         client.Value.Close();
+
+                        formGds.Invoke((MethodInvoker)delegate
+                        {
+                            formGds.infoConection.Text = "Cliente desconectado";
+                        });
                     }
                 }
                 catch (Exception ex)

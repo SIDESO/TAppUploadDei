@@ -1,6 +1,8 @@
 ﻿using System.Net;
+using System.Text;
 using System.Web;
 using messages.Gds.Websocket;
+using Newtonsoft.Json;
 using TappUploadDei;
 using static TappUploadDei.SdkGds;
 
@@ -322,9 +324,183 @@ namespace GDSExtractor
 
         private void buttonReconnectClient_Click(object sender, EventArgs e)
         {
+            this.infoConection.Text = "Reconectando...";
+            this.labelReposnseBtnGetEvents.Text = "";
             this.listener.DisconnectClient();
             ConnectClient();
         }
+
+        private void buttonExportEvents_Click(object sender, EventArgs e)
+        {
+            if (bindingSourceDei.Count == 0)
+            {
+                MessageBox.Show("No hay datos para enviar", "Error");
+                return;
+            }
+
+            DisableControls();
+
+            this.buttonExportEvents.Text = "Enviando...";
+
+            SaveDadaDei();
+        }
+
+        private void DisableControls()
+        {
+            this.buttonExportEvents.Enabled = false;
+            this.buttonGetEvents.Enabled = false;
+            this.buttonReconnectClient.Enabled = false;
+        }
+
+        /**
+         * funcion para habilitar los botones
+         */
+        private void EnableControls()
+        {
+            this.buttonExportEvents.Enabled = true;
+            this.buttonGetEvents.Enabled = true;
+            this.buttonReconnectClient.Enabled = true;
+            this.buttonExportEvents.Text = "xportar Eventos a Transito App";
+
+        }
+
+
+
+        private async void SaveDadaDei()
+        {
+
+            //recorrer la lista de deis
+            foreach (Dei d in bindingSourceDei)
+            {
+                try
+                {
+                    if (d.Status == (int)Status.Success || d.Status == (int)Status.Sending)
+                    {
+                        continue;
+                    }
+
+
+                    int deiIndex = bindingSourceDei.IndexOf(d);
+                    d.Status = (int)Status.Sending;
+                    d.Result = "Enviando...";
+                    bindingSourceDei.ResetItem(deiIndex);
+
+
+                    //esperar a que se envie el dei y espera a que se complete
+                    await StoreDeiAsync(d, deiIndex).ConfigureAwait(false);
+
+                }
+                catch (Exception ex)
+                {
+                    d.Status = (int)Status.Error;
+                    d.Result = "ERROR: " + ex.Message;
+                }
+
+            }
+
+            var errors_count = bindingSourceDei.Cast<Dei>().Where(d => d.Status == (int)Status.Error).Count();
+
+            if (errors_count > 0)
+            {
+                //  BtnResendDeis();
+            }
+
+            EnableControls();
+
+        }
+
+        /**
+         * Enviar el dei al servidor 
+         * @param Dei d
+         * @param int deiIndex
+         */
+        private async Task StoreDeiAsync(Dei d, int deiIndex)
+        {
+
+            string url = endPoint + "/windows_apps_api_dei/dei_store";
+            string json = d.json();
+
+            StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            try
+            {
+
+                // Send a request asynchronously continue when complete
+                using (HttpResponseMessage response = await httpClient.PostAsync(url, content))
+                {
+                    try
+                    {
+                        // Check for success or throw exception
+                        string contentResponse = await response.Content.ReadAsStringAsync();
+
+                        if (response.IsSuccessStatusCode)
+                        {
+                            var definition = new { mensaje = "", dei_id = "" };
+                            var data = JsonConvert.DeserializeAnonymousType(contentResponse, definition);
+
+                            this.Invoke((MethodInvoker)delegate
+                            {
+                                d.Result = data.dei_id;
+                                d.Status = (int)Status.Success;
+
+                                bindingSourceDei.ResetItem(deiIndex);
+
+                                this.labelEvtExported.Text = (++countUpload).ToString();
+
+                            });
+                        }
+                        else if (response.StatusCode != HttpStatusCode.OK)
+                        {
+
+                            string data = JsonConvert.ToString(contentResponse);
+
+                            this.Invoke((MethodInvoker)delegate
+                            {
+                                d.Result = "ERROR: " + response.StatusCode + " " + data;
+                                bindingSourceDei.ResetItem(deiIndex);
+                                this.labelEvtWithError.Text = (++countError).ToString();
+
+
+                            });
+
+                        }
+
+                        else
+                        {
+                            this.Invoke((MethodInvoker)delegate
+                            {
+                                d.Result = "ERROR: " + response.StatusCode;
+                                bindingSourceDei.ResetItem(deiIndex);
+                                this.labelEvtWithError.Text = (++countError).ToString();
+
+                            });
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        this.Invoke((MethodInvoker)delegate
+                        {
+                            d.Result = "ERROR" + ex.Message;
+                            bindingSourceDei.ResetItem(deiIndex);
+                            this.labelEvtWithError.Text = (++countError).ToString();
+
+                        });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                this.Invoke((MethodInvoker)delegate
+                {
+                    d.Result = "ERROR :" + ex.Message;
+                    bindingSourceDei.ResetItem(deiIndex);
+                    this.labelEvtWithError.Text = (++countError).ToString();
+                });
+
+            }
+        }
+
+
 
 
     }
