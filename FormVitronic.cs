@@ -86,7 +86,7 @@ namespace TappUploadDei
                     this.Close();
                 }
 
-                this.Text = this.Text + "V " + ProductVersionApp + " _ " + userName;
+                this.Text = this.Text + " " + AplicationName + " V " + ProductVersionApp + " _ " + userName;
 
             }
             catch (Exception ex)

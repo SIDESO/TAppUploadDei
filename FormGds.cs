@@ -98,8 +98,8 @@ namespace GDSExtractor
         }
 
         /**
- * validate the parameters and boot the application
- */
+         * validate the parameters and boot the application
+        */
         public void ValidateParamInitial()
         {
 
@@ -137,7 +137,7 @@ namespace GDSExtractor
                     this.Close();
                 }
 
-                this.Text = this.Text + "V " + ProductVersionApp + " _ " + userName;
+                this.Text = this.Text + " " + AplicationName + " V " + ProductVersionApp + " _ " + userName;
 
 
                 //command = paramsCollection["command"];

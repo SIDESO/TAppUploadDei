@@ -34,6 +34,7 @@ namespace GDSExtractor
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormGds));
             panel1 = new Panel();
             buttonReconnectClient = new System.Windows.Forms.Button();
             label4 = new Label();
@@ -117,7 +118,6 @@ namespace GDSExtractor
             dateTimeStartDate.Name = "dateTimeStartDate";
             dateTimeStartDate.Size = new Size(311, 27);
             dateTimeStartDate.TabIndex = 0;
-        
             // 
             // label3
             // 
@@ -153,12 +153,11 @@ namespace GDSExtractor
             label1.UseMnemonic = false;
             // 
             // dateTimeEndDate
-            //
+            // 
             dateTimeEndDate.Location = new Point(317, 33);
             dateTimeEndDate.Name = "dateTimeEndDate";
             dateTimeEndDate.Size = new Size(311, 27);
             dateTimeEndDate.TabIndex = 1;
-          
             // 
             // label2
             // 
@@ -216,10 +215,11 @@ namespace GDSExtractor
             Controls.Add(panel2);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             Name = "FormGds";
             RightToLeftLayout = true;
-            Text = "Extraxtor Gds - TAAP";
+            Text = "Extractor Gds - TApp";
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             panelGetEvents.ResumeLayout(false);
