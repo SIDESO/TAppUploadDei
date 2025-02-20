@@ -89,6 +89,11 @@ namespace TappUploadDei
         [JsonProperty("camera_id")]
         public string CameraId { get; set; }
 
+
+        //serial camara
+        [JsonProperty("camera_serial")]
+        public string CameraSerial { get; set; }
+
         //nombre de adjuntos
         [JsonProperty("attachments_str")]
         public string AttachmentsStr { get; set; }
@@ -111,6 +116,7 @@ namespace TappUploadDei
             string data = "",
             string externalId = "",
             string cameraId = "",
+            string cameraSerial = "",
             string attachmentsStr = ""
 
             )
@@ -138,6 +144,7 @@ namespace TappUploadDei
 
             ExternalId = externalId;
             CameraId = cameraId;
+            CameraSerial = cameraSerial;
 
             AttachmentsStr = attachmentsStr;
 

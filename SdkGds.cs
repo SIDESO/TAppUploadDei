@@ -350,7 +350,7 @@ namespace TappUploadDei
                        documentUploadId: "",
                        data: "",
                        externalId: id,
-                       cameraId: serial
+                       cameraSerial: serial
                    );
 
                 //si no existen las imagenes, no agregar el objeto
