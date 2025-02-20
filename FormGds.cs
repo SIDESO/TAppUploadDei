@@ -245,6 +245,7 @@ namespace GDSExtractor
             DataGridViewDeis.Columns.Add(ColumnDataGrid("LicensePlate", "LicensePlate", "Placa"));
             DataGridViewDeis.Columns.Add(ColumnDataGrid("DateStr", "DateStr", "Fecha"));
             DataGridViewDeis.Columns.Add(ColumnDataGrid("AttachmentsStr", "AttachmentsStr", "Fotos"));
+            DataGridViewDeis.Columns.Add(ColumnDataGrid("DetailPhoto", "DetailPhoto", "Foto Detalle"));
             DataGridViewDeis.Columns.Add(ColumnDataGrid("MaxSpeed", "MaxSpeed", "Velocidad Máxima"));
             DataGridViewDeis.Columns.Add(ColumnDataGrid("CapturedSpeed", "CapturedSpeed", "Velocidad Capturada"));
             DataGridViewDeis.Columns.Add(ColumnDataGrid("CameraId", "CameraId", "CameraId"));

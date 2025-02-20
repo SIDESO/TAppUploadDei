@@ -456,24 +456,26 @@ namespace TappUploadDei
                 //asignar la ruta del archivo al la dei
                 this.formGds.Invoke((MethodInvoker)delegate
                    {
-                    Dei? dei = formGds.bindingSourceDei.Cast<Dei>().FirstOrDefault(x => x.ExternalId == event_id);
+                       Dei? dei = formGds.bindingSourceDei.Cast<Dei>().FirstOrDefault(x => x.ExternalId == event_id);
 
-                    if (dei != null)
-                    {
-                        if (dei.DetailPhoto == null || dei.DetailPhoto == "")
-                        {
-                            dei.DetailPhoto = path;
-                            return;
-                        }
+                       if (dei != null)
+                       {
+                           if (dei.DetailPhoto == null || dei.DetailPhoto == "")
+                           {
+                               dei.DetailPhoto = path;
+                               return;
+                           }
 
-                        if (dei.PanoramicPhoto == null || dei.PanoramicPhoto == "")
-                        {
-                            dei.PanoramicPhoto = path;
-                            return;
+                           if (dei.PanoramicPhoto == null || dei.PanoramicPhoto == "")
+                           {
+                               dei.PanoramicPhoto = path;
+                               return;
 
-                        }
+                           }
+                       }
 
-                    });
+                   });
+
 
 
 
