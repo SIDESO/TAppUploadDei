@@ -31,7 +31,6 @@ namespace TappUploadDei
             private readonly string commandApplication = formGds.commandApplication;
 
             readonly FormGds formGds = formGds;
-;
 
             public override void OnConnectionSuccess(MessageHeader header, ConnectionAckData data)
             {
