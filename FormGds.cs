@@ -26,9 +26,9 @@ namespace GDSExtractor
         public TestListener listener;
 
         //get endpoint
-        public string getEndpoint()
+        public string GetEndpoint()
         {
-            return this.endPoint;
+            return this.endPoint ?? "";
         }
         //get
 

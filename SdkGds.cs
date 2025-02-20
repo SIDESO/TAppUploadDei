@@ -31,8 +31,7 @@ namespace TappUploadDei
             private readonly string commandApplication = formGds.commandApplication;
 
             readonly FormGds formGds = formGds;
-
-            private BindingSource bindingSourceDei = formGds.bindingSourceDei;
+;
 
             public override void OnConnectionSuccess(MessageHeader header, ConnectionAckData data)
             {
@@ -254,7 +253,11 @@ namespace TappUploadDei
                    );
 
                 //agregar el objeto al binding source
-                bindingSourceDei.Add(dei);
+                formGds.Invoke((MethodInvoker)delegate
+                {
+                    formGds.bindingSourceDei.Add(dei);
+                });
+
 
 
                 //crear la data que se va a enviar a transito app
@@ -306,7 +309,7 @@ namespace TappUploadDei
             {
                 HttpClient httpClient = formGds.HttpClientF();
 
-                string url = formGds.getEndpoint() + "/windows_apps_api/dei_create";
+                string url = formGds.GetEndpoint() + "/windows_apps_api/dei_create";
                 string json = d.json();
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
                 var response = await httpClient.PostAsync(url, content);
@@ -368,7 +371,7 @@ namespace TappUploadDei
                 //limpiar el binding source
                 formGds.Invoke((MethodInvoker)delegate
                 {
-                    bindingSourceDei.Clear();
+                    formGds.bindingSourceDei.Clear();
                 });
 
 
