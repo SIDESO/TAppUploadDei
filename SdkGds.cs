@@ -319,7 +319,7 @@ namespace TappUploadDei
                  
                  * */
                 string id = record["id"]?.ToString() ?? "";
-                string plate = record["plate"]?.ToString() ?? "";
+                string plate = record["plate"]?.ToString() ?? record["rear_plate"]?.ToString() ?? "";
                 string date = record["@timestamp"]?.ToString() ?? "";
                 string captured_speed = record["speed"]?.ToString() ?? "";
                 string serial = record["source"]?.ToString() ?? "";
@@ -343,7 +343,7 @@ namespace TappUploadDei
                        pointId: "",
                        panoramicVideo: "",
                        detailVideo: "",
-                       panoramicPhoto: "",
+                       panoramicPhoto: attachments_str,
                        detailPhoto: "",
                        capturedSpeed: captured_speed,
                        commandApplication: this.commandApplication,
