@@ -22,6 +22,7 @@ namespace GDSExtractor
         private HttpClient httpClient = new HttpClient();
         private readonly string ProductVersionApp = Application.ProductVersion.Split("+")[0];
         public readonly string commandApplication = "GDS";
+        private readonly string AplicationName = "GDSExport";
 
         public TestListener listener;
 
@@ -178,7 +179,7 @@ namespace GDSExtractor
         {
             try
             {
-                httpClient.GetAsync(endPoint + "/windows_app_api_version/FilesVitronic").ContinueWith(response =>
+                httpClient.GetAsync(endPoint + "/windows_app_api_version/" + AplicationName).ContinueWith(response =>
                 {
                     try
                     {

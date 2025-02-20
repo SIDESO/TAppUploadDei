@@ -22,6 +22,7 @@ namespace TappUploadDei
         private HttpClient httpClient = new HttpClient();
         private readonly string ProductVersionApp = Application.ProductVersion.Split("+")[0];
         private readonly string commandApplication = "VI";
+        private readonly string AplicationName = "FilesVitronic";
 
 
         public FormMainVitronic()
@@ -115,7 +116,7 @@ namespace TappUploadDei
         {
             try
             {
-                httpClient.GetAsync(endPoint + "/windows_app_api_version/FilesVitronic").ContinueWith(response =>
+                httpClient.GetAsync(endPoint + "/windows_app_api_version/" + AplicationName).ContinueWith(response =>
                 {
                     try
                     {
