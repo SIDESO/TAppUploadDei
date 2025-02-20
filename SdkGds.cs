@@ -362,10 +362,6 @@ namespace TappUploadDei
             {
 
                 //si no existe el cliente, no hacer nada
-                if (!client.Value.IsConnected)
-                {
-                    return "Cliente no conectado";
-                }
 
                 //limpiar el binding source
                 formGds.Invoke((MethodInvoker)delegate
@@ -396,7 +392,7 @@ namespace TappUploadDei
                 //crear y realizar la consulta
                 string query = "SELECT * FROM multi_event WHERE \"@timestamp\" >= " + start_date + " AND \"@timestamp\" <= " + end_date;
 
-                if (limit == 0)
+                if (limit != 0)
                 {
                     query = query + " LIMIT " + limit;
                 }
