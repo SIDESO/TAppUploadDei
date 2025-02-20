@@ -1,5 +1,4 @@
-﻿using System.Text;
-using Gds.Messages;
+﻿using Gds.Messages;
 using Gds.Messages.Data;
 using Gds.Messages.Header;
 using Gds.Utils;
@@ -354,6 +353,15 @@ namespace TappUploadDei
                        cameraId: serial
                    );
 
+                //si no existen las imagenes, no agregar el objeto
+                if (attachments_ids == null || attachments_ids.Length == 0)
+                {
+                    dei.Result = "Error,no se encontraron imágenes";
+                    dei.Status = (int)Status.Error;
+
+                    //agregar el objeto al binding source
+                }
+
                 //agregar el objeto al binding source
                 formGds.Invoke((MethodInvoker)delegate
                 {
@@ -405,40 +413,6 @@ namespace TappUploadDei
 
             }
 
-
-
-            private async void createDeiTappAsync(Dei d, int deiIndex)
-            {
-                HttpClient httpClient = formGds.HttpClientF();
-
-                string url = formGds.GetEndpoint() + "/windows_apps_api/dei_create";
-                string json = d.json();
-                var content = new StringContent(json, Encoding.UTF8, "application/json");
-                var response = await httpClient.PostAsync(url, content);
-                var contentResponse = await response.Content.ReadAsStringAsync();
-
-                if (response.IsSuccessStatusCode)
-                {
-                    var definition = new { success = "", id = "" };
-                    var data = JsonConvert.DeserializeAnonymousType(contentResponse, definition);
-
-                    formGds.Invoke((MethodInvoker)delegate
-                    {
-                        DataGridViewRow row = formGds.DataGridViewDeis.Rows[deiIndex];
-                        row.Cells[0].Value = data.id;
-                        // d.resultado = data.id;
-
-                    });
-                }
-                else
-                {
-                    formGds.Invoke((MethodInvoker)delegate
-                    {
-                        //  d.resultado = "ERROR";
-
-                    });
-                }
-            }
 
             /**
              * escribir el adjunto en disco y asignar la ruta a la dei

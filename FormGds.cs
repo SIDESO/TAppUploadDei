@@ -30,13 +30,6 @@ namespace GDSExtractor
 
         public readonly string pathImagesGds = @"c:\ATTACHMENTS_GDS_TAPP";
 
-        //get endpoint
-        public string GetEndpoint()
-        {
-            return this.endPoint ?? "";
-        }
-        //get
-
 
 
 
