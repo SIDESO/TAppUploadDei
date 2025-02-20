@@ -318,11 +318,11 @@ namespace TappUploadDei
 
                  
                  * */
-                string id = record["id"].ToString() ?? "";
-                string plate = record["plate"].ToString() ?? "";
-                string date = record["@timestamp"].ToString() ?? "";
-                string captured_speed = record["speed"].ToString() ?? "";
-                string serial = record["source"].ToString() ?? "";
+                string id = record["id"]?.ToString() ?? "";
+                string plate = record["plate"]?.ToString() ?? "";
+                string date = record["@timestamp"]?.ToString() ?? "";
+                string captured_speed = record["speed"]?.ToString() ?? "";
+                string serial = record["source"]?.ToString() ?? "";
                 string data = "";
                 string attachments_str = JsonConvert.SerializeObject(record["overview_image"]);
                 object[] attachments_ids = record["overview_image"] as object[];
