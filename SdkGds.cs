@@ -229,7 +229,7 @@ namespace TappUploadDei
                 //la fecha viene en formato timestamp
                 DateTime dateTime = DateTimeOffset.FromUnixTimeMilliseconds(long.Parse(date)).DateTime;
 
-                string dateTimeStr = dateTime.ToString("dd/MM/yyyy HH:mm");
+                string dateTimeStr = dateTime.ToString("yyyy-MM-dd HH:mm:ss");
 
                 string FormatDate = "yyyy-MM-dd HH:mm:ss";
 
