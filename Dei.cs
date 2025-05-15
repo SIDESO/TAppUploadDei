@@ -44,6 +44,11 @@ namespace TappUploadDei
         [JsonProperty("captured_speed")]
         public string CapturedSpeed { get; set; }
 
+        // usar la velocidad del documento use_max_speed
+        [JsonProperty("use_max_speed")]
+        public bool UseMaxSpeed { get; set; }
+
+
         //resultado en la tabla
         [property: JsonIgnore]
         public string Result { get; set; }
@@ -111,6 +116,7 @@ namespace TappUploadDei
             string detailPhoto = "",
             string maxSpeed = "",
             string capturedSpeed = "",
+            bool useMaxSpeed = false,
             string commandApplication = "",
             string documentUploadId = "",
             string data = "",
@@ -132,6 +138,7 @@ namespace TappUploadDei
             DetailPhoto = detailPhoto;
             MaxSpeed = maxSpeed;
             CapturedSpeed = capturedSpeed;
+            UseMaxSpeed = useMaxSpeed;
             Result = "Pendiente";
             DocumentUploadId = documentUploadId;
             Data = data;
@@ -147,6 +154,8 @@ namespace TappUploadDei
             CameraSerial = cameraSerial;
 
             AttachmentsStr = attachmentsStr;
+
+
 
         }
 

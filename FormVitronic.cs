@@ -429,6 +429,11 @@ namespace TappUploadDei
                     else if (vehicleType == "lorry")
                     {
                         causeSpeeding = xml_document.GetElementsByTagName("causeSpeeding")[1] ?? null;
+
+                        if (causeSpeeding == null)
+                        {
+                            causeSpeeding = xml_document.GetElementsByTagName("causeSpeeding")[0] ?? null;
+                        }
                     }
 
 
@@ -445,7 +450,7 @@ namespace TappUploadDei
                 }
 
                 //validar que existan las imagenes,la velocidad maxima y la velocidad capturada
-                if (dateTimeStr == null || !File.Exists(pathPanoramicPhoto) || !File.Exists(pathDetailPhoto) || captured_speed == null || max_speed == null)
+                if (dateTimeStr == null || !File.Exists(pathPanoramicPhoto) || !File.Exists(pathDetailPhoto) || (captured_speed == null || captured_speed == "") || (max_speed == null || max_speed == ""))
                 {
                     return;
                 }
@@ -466,6 +471,7 @@ namespace TappUploadDei
                     detailPhoto: pathDetailPhoto,
                     maxSpeed: max_speed,
                     capturedSpeed: captured_speed,
+                    useMaxSpeed: true,
                     commandApplication: this.commandApplication,
                     documentUploadId: "",
                     data: ""

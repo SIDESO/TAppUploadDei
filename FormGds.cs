@@ -243,7 +243,7 @@ namespace GDSExtractor
             DataGridViewDeis.Columns.Add(ColumnDataGrid("DetailPhoto", "DetailPhoto", "Foto Detalle"));
             DataGridViewDeis.Columns.Add(ColumnDataGrid("MaxSpeed", "MaxSpeed", "Velocidad Máxima"));
             DataGridViewDeis.Columns.Add(ColumnDataGrid("CapturedSpeed", "CapturedSpeed", "Velocidad Capturada"));
-            DataGridViewDeis.Columns.Add(ColumnDataGrid("CameraId", "CameraId", "CameraId"));
+            DataGridViewDeis.Columns.Add(ColumnDataGrid("CameraSerial", "CameraSerial", "Camara"));
             DataGridViewDeis.Columns.Add(ColumnDataGrid("Result", "Result", "Resultado"));
 
 
@@ -350,10 +350,13 @@ namespace GDSExtractor
          */
         private void EnableControls()
         {
-            this.buttonExportEvents.Enabled = true;
-            this.buttonGetEvents.Enabled = true;
-            this.buttonReconnectClient.Enabled = true;
-            this.buttonExportEvents.Text = "xportar Eventos a Transito App";
+            this.Invoke((MethodInvoker)delegate
+            {
+                this.buttonExportEvents.Enabled = true;
+                this.buttonGetEvents.Enabled = true;
+                this.buttonReconnectClient.Enabled = true;
+                this.buttonExportEvents.Text = "xportar Eventos a Transito App";
+            });
 
         }
 
@@ -398,7 +401,10 @@ namespace GDSExtractor
                 //  BtnResendDeis();
             }
 
-            EnableControls();
+            this.Invoke((MethodInvoker)delegate
+            {
+                EnableControls();
+            });
 
         }
 
