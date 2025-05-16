@@ -35,5 +35,30 @@ namespace TappUploadDei
             //cerramos el formulario actual  sin finalizar la aplicacion
             this.Dispose(false);
         }
+
+
+        private void buttonTruCamExport_Click(object sender, EventArgs e)
+        {
+
+            //creamos una instancia de la clase FormTruCam
+            FormTruCam formTruCamApp = new FormTruCam();
+            //mostramos el formulario
+            formTruCamApp.Show();
+            //cerramos el formulario actual  sin finalizar la aplicacion
+            this.Dispose(false);
+
+        }
+
+        private void buttonDragonCamExport_Click(object sender, EventArgs e)
+        {
+
+            //creamos una instancia de la clase FormDragonCam
+            FormDragonCam formTruCamApp = new FormDragonCam();
+            //mostramos el formulario
+            formTruCamApp.Show();
+            //cerramos el formulario actual  sin finalizar la aplicacion
+            this.Dispose(false);
+
+        }
     }
 }

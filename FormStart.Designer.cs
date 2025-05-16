@@ -30,13 +30,14 @@
         {
             buttonVitronicApp = new Button();
             buttonGdsExport = new Button();
-            button1 = new Button();
+            buttonTruCamExport = new Button();
+            buttonDragonCamExport = new Button();
             SuspendLayout();
             // 
             // buttonVitronicApp
             // 
             buttonVitronicApp.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            buttonVitronicApp.Location = new Point(97, 74);
+            buttonVitronicApp.Location = new Point(97, 46);
             buttonVitronicApp.Name = "buttonVitronicApp";
             buttonVitronicApp.Size = new Size(396, 51);
             buttonVitronicApp.TabIndex = 0;
@@ -47,7 +48,7 @@
             // buttonGdsExport
             // 
             buttonGdsExport.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            buttonGdsExport.Location = new Point(97, 150);
+            buttonGdsExport.Location = new Point(97, 118);
             buttonGdsExport.Name = "buttonGdsExport";
             buttonGdsExport.Size = new Size(396, 51);
             buttonGdsExport.TabIndex = 1;
@@ -55,22 +56,35 @@
             buttonGdsExport.UseVisualStyleBackColor = true;
             buttonGdsExport.Click += buttonGdsExport_Click;
             // 
-            // button1
+            // buttonTruCamExport
             // 
-            button1.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button1.Location = new Point(97, 232);
-            button1.Name = "button1";
-            button1.Size = new Size(396, 51);
-            button1.TabIndex = 2;
-            button1.Text = "Cargar archivos TRUCAM";
-            button1.UseVisualStyleBackColor = true;
+            buttonTruCamExport.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            buttonTruCamExport.Location = new Point(97, 200);
+            buttonTruCamExport.Name = "buttonTruCamExport";
+            buttonTruCamExport.Size = new Size(396, 51);
+            buttonTruCamExport.TabIndex = 2;
+            buttonTruCamExport.Text = "Cargar archivos TRUCAM";
+            buttonTruCamExport.UseVisualStyleBackColor = true;
+            buttonTruCamExport.Click += buttonTruCamExport_Click;
+            // 
+            // buttonDragonCamExport
+            // 
+            buttonDragonCamExport.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            buttonDragonCamExport.Location = new Point(97, 281);
+            buttonDragonCamExport.Name = "buttonDragonCamExport";
+            buttonDragonCamExport.Size = new Size(396, 51);
+            buttonDragonCamExport.TabIndex = 3;
+            buttonDragonCamExport.Text = "Cargar archivos DRAGONCAM";
+            buttonDragonCamExport.UseVisualStyleBackColor = true;
+            buttonDragonCamExport.Click += buttonDragonCamExport_Click;
             // 
             // FormSelectApp
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(600, 409);
-            Controls.Add(button1);
+            Controls.Add(buttonDragonCamExport);
+            Controls.Add(buttonTruCamExport);
             Controls.Add(buttonGdsExport);
             Controls.Add(buttonVitronicApp);
             Name = "FormSelectApp";
@@ -83,6 +97,7 @@
 
         private Button buttonVitronicApp;
         private Button buttonGdsExport;
-        private Button button1;
+        private Button buttonTruCamExport;
+        private Button buttonDragonCamExport;
     }
 }
