@@ -8,7 +8,7 @@ namespace TappUploadDei
 {
 
 
-    public partial class FormTruCam : Form, TappValidation
+    public partial class FormDragonCam : Form, TappValidation
     {
 
         string? url = null;
@@ -21,11 +21,11 @@ namespace TappUploadDei
         int countError = 0;
         private HttpClient httpClient = new HttpClient();
         private readonly string ProductVersionApp = "1.0.0";//Application.ProductVersion.Split("+")[0];
-        private readonly string commandApplication = "TC";
-        private readonly string AplicationName = "FilesTruCam";
+        private readonly string commandApplication = "DC";
+        private readonly string AplicationName = "FilesDragonCam";
 
 
-        public FormTruCam()
+        public FormDragonCam()
         {
             args = Environment.GetCommandLineArgs();
 
@@ -273,7 +273,7 @@ namespace TappUploadDei
             string tempPath = Path.GetTempPath();
 
             // Nombre del directorio temporal único
-            string tempDirectoryName = Path.Combine(tempPath, "imagenes_trucamtmp");
+            string tempDirectoryName = Path.Combine(tempPath, "imgs_dragon_cam");
 
             // Verificar si el directorio temporal ya existe y eliminarlo
             if (Directory.Exists(tempDirectoryName))
@@ -291,219 +291,203 @@ namespace TappUploadDei
                 return;
             }
 
-            //recorrer todos los archivos de la carpeta y subcarpetas
 
-            string[] files = Directory.GetFiles(path, "*.*", SearchOption.AllDirectories);
-            int totalFiles = 0;
+            Process process = new Process();
 
-            //barra de progreso
-            this.progressBarFilesLoad.Visible = true;
-            this.progressBarFilesLoad.Minimum = 1;
-            this.progressBarFilesLoad.Maximum = files.Length;
-            this.progressBarFilesLoad.Value = 1;
-            this.progressBarFilesLoad.Step = 1;
+            string basePath = AppDomain.CurrentDomain.BaseDirectory;
+
+            //"C:\Users\carlo\OneDrive\Escritorio\C29\Utilities_C29\Utilities_Dragoncam\ImgExtract.exe" "C:\Users\carlo\OneDrive\Escritorio\C29\MuestraDragonCam" "C:\Users\carlo\OneDrive\Escritorio\C29\DesencriptadoCmdDrangonCam" "" """
+
+            // Configura el proceso
+            process.StartInfo.FileName = "C:\\SIDESO\\TappUploadDei\\Utilities\\Utilities_Dragoncam\\ImgExtract.exe";  // Nombre del archivo ejecutable (ej: "cmd.exe")
+            process.StartInfo.Arguments = "\"" + path + "\"" + " \"" + tempDirectoryName + "\"" + " \"\" \"\"";      // Argumentos a pasar al proceso
+            process.StartInfo.UseShellExecute = false;   // Desactiva la shell para poder controlar el proceso
+            process.StartInfo.CreateNoWindow = true;      // No crea una ventana para el proceso
+            process.StartInfo.RedirectStandardOutput = true; // Redirige la salida del proceso
+            process.StartInfo.RedirectStandardError = true;  // Redirige los errores del proceso
 
 
+            // Inicia el proceso
+            process.Start();
 
-            //leer recursivamente todos los archivos de la carpeta
-            foreach (string file in files)
+            // salidaS del proceso
+            string output = process.StandardOutput.ReadToEnd();
+            string error = process.StandardError.ReadToEnd();
+
+            process.WaitForExit(); // Espera a que el proceso termine
+
+            // Verificar si el proceso se completó correctamente
+            if (process.ExitCode == 0 || string.IsNullOrEmpty(error))
             {
 
-                if (File.Exists(file))
+                //el archivo de texto que contiene la informacion es el .txt
+
+                string[] filesDatatxt = Directory.GetFiles(tempDirectoryName, "*.txt", SearchOption.AllDirectories);
+
+                //validar si hay archivos .txt
+                if (filesDatatxt.Length == 0)
                 {
-                    totalFiles++;
-                    this.progressBarFilesLoad.PerformStep();
+                    MessageBox.Show("No se encontraron archivo de datos en  " + tempDirectoryName, "Error");
+                    return;
+                }
 
-                    //crear un directorio dentro del temporal con el nombre del archivo sin la extension
-                    string fileName = Path.GetFileName(file);
-                    string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(file);
-                    string extractPath = Path.Combine(tempDirectoryName, fileNameWithoutExtension);
+                //las imagenes son los .jpg
+                string[] fileImagesJpg = Directory.GetFiles(tempDirectoryName, "*.jpg", SearchOption.AllDirectories);
 
-                    //crear carpeta del archivo
-                    Directory.CreateDirectory(extractPath);
+                //validar si hay archivos .jpg
+                if (fileImagesJpg.Length == 0)
+                {
+                    MessageBox.Show("No se encontraron imágenes para cargar en " + tempDirectoryName, "Error");
+                    return;
+                }
 
-                    Process process = new Process();
+                /*
+                vio_file,vio_date,vio_time,location,loc_code,posted_speed,threshold_speed,vio_speed,vio_range,officer_id,officer_name,sys_id,laser_id,camera_id,gps_latitude,gps_longitude,gps_time,vio_image,boresight_x,boresight_y,boresight_width,boresight_height,cal_date,status
+                SAST-12025051307384313244,MAY. 13 2025,07:38:43,Avenida 10 calle 52 Ruta Nacional 5505 - Comfanorte,SAST-1,30,32,40,159,D100,Operador,DCAM13244,13244,15183635,7.85860419,-72.50088173,,SAST-12025051307384313244.jpg,591,266,120,155,2025MAY.12,Accepted
+                SAST-12025051308002413244,MAY. 13 2025,08:00:24,Avenida 10 calle 52 Ruta Nacional 5505 - Comfanorte,SAST-1,30,32,36,143,D100,Operador,DCAM13244,13244,15183635,7.85860348,-72.50088550,,SAST-12025051308002413244.jpg,591,266,120,155,2025MAY.12,Accepted
+                */
 
-                    string basePath = AppDomain.CurrentDomain.BaseDirectory;
-
-                    //"C:\Users\carlo\OneDrive\Escritorio\C29\Utilities_C29\Utilities_Trucam\tdw64net.exe" "C:\Users\carlo\OneDrive\Escritorio\C29\Muestra Trucam\1747149347_Nt200_0513_151547.jmx"
-
-                    // Configura el proceso
-                    process.StartInfo.FileName = "C:\\SIDESO\\TappUploadDei\\Utilities\\Utilities_Trucam\\tdw64net.exe";  // Nombre del archivo ejecutable (ej: "cmd.exe")
-                    process.StartInfo.Arguments = "\"" + file + "\"";      // Argumentos a pasar al proceso
-                    process.StartInfo.UseShellExecute = false;   // Desactiva la shell para poder controlar el proceso
-                    process.StartInfo.CreateNoWindow = true;      // No crea una ventana para el proceso
-                    process.StartInfo.RedirectStandardOutput = true; // Redirige la salida del proceso
-                    process.StartInfo.RedirectStandardError = true;  // Redirige los errores del proceso
-                    process.StartInfo.WorkingDirectory = extractPath; // Establece el directorio de trabajo del proceso
-
-                    // Inicia el proceso
-                    process.Start();
-
-                    // Lee la salida del proceso
-                    string output = process.StandardOutput.ReadToEnd();
-
-                    string error = process.StandardError.ReadToEnd();
-
-                    process.WaitForExit(); // Espera a que el proceso termine
-
-                    // Verificar si el proceso se completó correctamente
-                    if (process.ExitCode == 0)
+                //organizar los datos del archivos .txt
+                string fileData = filesDatatxt[0];
+                string[] linesTxt = File.ReadAllLines(fileData);
+                string[] headers = linesTxt[0].Split(",");
+                string[] records = linesTxt.Skip(1).ToArray();
+                List<Dictionary<string, string>> data_list = new List<Dictionary<string, string>>();
+                foreach (string line in records)
+                {
+                    string[] record = line.Split(",");
+                    //validar que el registro tenga la misma cantidad de campos que el encabezado
+                    if (record.Length != headers.Length)
                     {
-
-                        //buscar el archivo de texto
-                        string pathFileTxt = Path.Combine(extractPath, "UserData.txt");
-                        //buscar una imagen con el nombre MeasurementFrameT.bmp
-                        string pathImage = Path.Combine(extractPath, "MeasurementFrameT.bmp");
-
-                        //si alguno de los dos no existe continuar
-                        if (!File.Exists(pathImage) || !File.Exists(pathFileTxt))
-                        {
-                            continue;
-                        }
-
-                        string fileNameImagePng = "trucam_" + fileNameWithoutExtension + ".jpg";
-
-                        //convertir la imagen a png
-                        string pathImagePng = Path.Combine(extractPath, fileNameImagePng);
-
-
-                        if (File.Exists(pathImagePng))
-                        {
-                            File.Delete(pathImagePng);
-                        }
-
-                        //convertir la imagen a png
-                        using (var image = Image.FromFile(pathImage))
-                        {
-                            image.Save(pathImagePng, System.Drawing.Imaging.ImageFormat.Jpeg);
-                        }
-
-
-
-                        //leer el archivo de texto y obtener los datos
-                        string[] lines = File.ReadAllLines(pathFileTxt);
-
-                        /*
-                         * 
-                         *  Clip Type = SPEED
-                            Clip Number = 12710
-                            System Mode = SPEED
-                            Number Of Frames = 32
-                            Measurement Frame = 23
-                            Speed Limit = 50
-                            Capture Speed = 52
-                            Measured Speed = 54
-                            Measured Distance = 120.1
-                            Lower Speed Limit = 50
-                            Lower Capture Speed = 52
-                            Higher Speed Limit = 50
-                            Higher Capture Speed = 52
-                            Limit Used = Lower
-                            Speed Units = km/h
-                            Distance Units = m
-                            Lane = 1
-                            Operator Name = 10O
-                            Operator ID = 100
-                            Street Name = Avenida 10 Urbanozacion Montebello 2 - Ruta Nacional 5505
-                            Street Code = SAST 4
-                            Clip Date = 13/05/2025
-                            Clip Time Code = 15:54:21
-                            Last Aligned = 17/04/2024  12:17:27
-                            Calibration Expires = N/A
-                            Paid Data = 
-                            Latitude = 7° 48' 12.43" N
-                            Longitude = 72° 31' 12.88" W
-                            Firmware Version = 4.7.69  100.200.1.19
-                            Serial No = TC011735
-                            Signature = 
-                            Crosshair Position: (X, Y) = (640, 480)
-                            Frame Size: (Width, Height) = (1280, 960)
-                         */
-
-                        Dictionary<string, string> dataTxt = new Dictionary<string, string>();
-
-                        foreach (string line in lines)
-                        {
-                            //partir la linea por el =
-                            string[] parts = line.Split('=');
-
-                            //guardar en la lista
-                            dataTxt.Add(parts[0].Trim(), parts[1].Trim());
-
-                        }
-
-
-                        string? dateTimeStr = "";
-                        string? max_speed = "";
-                        string? captured_speed = "";
-                        string? pathDetailPhoto = pathImagePng ?? "";
-
-                        if (dataTxt.ContainsKey("Clip Date") && dataTxt.ContainsKey("Clip Time Code"))
-                        {
-                            dateTimeStr = dataTxt["Clip Date"] + " " + dataTxt["Clip Time Code"];
-                        }
-
-                        {
-                            max_speed = dataTxt["Speed Limit"].Trim();
-                        }
-
-                        if (dataTxt.ContainsKey("Capture Speed"))
-                        {
-                            captured_speed = dataTxt["Capture Speed"].Trim();
-                        }
-
-                        if (dateTimeStr == "" || max_speed == "" || captured_speed == "" || pathDetailPhoto == "" | fileNameImagePng == "")
-                        {
-
-                            continue;
-                        }
-
-
-                        string stringLines = string.Join(",", lines);
-
-
-                        string FormatDate = "dd/MM/yyyy HH:mm:ss";
-
-                        Dei d = new Dei(
-                            licensePlate: "",
-                            date: dateTimeStr,
-                            formatDate: FormatDate,
-                            infractionCode: "C29",
-                            pointId: "",
-                            panoramicVideo: "",
-                            detailVideo: "",
-                            panoramicPhoto: "",
-                            detailPhoto: pathDetailPhoto,
-                            maxSpeed: max_speed,
-                            capturedSpeed: captured_speed,
-                            useMaxSpeed: true,
-                            commandApplication: this.commandApplication,
-                            documentUploadId: "",
-                            data: stringLines
-                            );
-
-                        //agregar el objeto al binding source
-                        bindingSourceDei.Add(d);
-
-
-                    }
-                    else
-                    {
-
                         continue;
                     }
 
+                    Dictionary<string, string> record_dic = new Dictionary<string, string>();
+                    //asignar cada campo a su respectivo encabezado
+                    for (int i = 0; i < headers.Length; i++)
+                    {
+                        record_dic.Add(headers[i], record[i]);
+                    }
+
+                    record_dic.Add("line", line);
+
+                    //agregar el registro a la lista de registros
+                    data_list.Add(record_dic);
+
+                }
+
+
+
+
+                //barra de progreso
+                this.progressBarFilesLoad.Visible = true;
+                this.progressBarFilesLoad.Minimum = 1;
+                this.progressBarFilesLoad.Maximum = fileImagesJpg.Length;
+                this.progressBarFilesLoad.Value = 1;
+                this.progressBarFilesLoad.Step = 1;
+                int totalFiles = 0;
+
+
+
+                //leer los datos de la lista
+                foreach (var data in data_list)
+                {
+                    /*
+                     * 
+                     *  KeyValuePair`2;KeyValuePair`2.Key;KeyValuePair`2.Value
+                        [vio_file, SAST-12025051307384313244];vio_file;SAST-12025051307384313244
+                        [vio_date, MAY. 13 2025];vio_date;"MAY. 13 2025"
+                        [vio_time, 07:38:43];vio_time;07:38:43
+                        [location, Avenida 10 calle 52 Ruta Nacional 5505 - Comfanorte];location;"Avenida 10 calle 52 Ruta Nacional 5505 - Comfanorte"
+                        [loc_code, SAST-1];loc_code;SAST-1
+                        [posted_speed, 30];posted_speed;30
+                        [threshold_speed, 32];threshold_speed;32
+                        [vio_speed, 40];vio_speed;40
+                        [vio_range, 159];vio_range;159
+                        [officer_id, D100];officer_id;D100
+                        [officer_name, Operador];officer_name;Operador
+                        [sys_id, DCAM13244];sys_id;DCAM13244
+                        [laser_id, 13244];laser_id;13244
+                        [camera_id, 15183635];camera_id;15183635
+                        [gps_latitude, 7.85860419];gps_latitude;7.85860419
+                        [gps_longitude, -72.50088173];gps_longitude;-72.50088173
+                        [gps_time, ];gps_time;""
+                        [vio_image, SAST-12025051307384313244.jpg];vio_image;SAST-12025051307384313244.jpg
+                        [boresight_x, 591];boresight_x;591
+                        [boresight_y, 266];boresight_y;266
+                        [boresight_width, 120];boresight_width;120
+                        [boresight_height, 155];boresight_height;155
+                        [cal_date, 2025MAY.12];cal_date;2025MAY.12
+                        [status, Accepted];status;Accepted
+
+             
+                    */
+                    totalFiles++;
+                    this.progressBarFilesLoad.PerformStep();
+
+                    string fileImage = data["vio_image"];
+
+                    //buscar en las imagenes jpg
+                    string pathDetailPhoto = fileImagesJpg.Where(f => f.Contains(fileImage)).FirstOrDefault() ?? "";
+                    if (pathDetailPhoto == "")
+                    {
+                        continue;
+                    }
+                    //feha y hora
+                    string dateTimeStr = data["vio_date"].Replace(".", "").Trim() + " " + data["vio_time"].Trim();
+
+
+                    string max_speed = data["posted_speed"];
+                    string? captured_speed = data["vio_speed"];
+
+                    if (dateTimeStr == "" || max_speed == "" || captured_speed == "" || pathDetailPhoto == "")
+                    {
+                        continue;
+                    }
+
+                    string FormatDate = "MMM dd yyyy HH:mm:ss";
+
+                    string stringData = string.Join(",", data["line"]);
+
+                    Dei d = new Dei(
+                                licensePlate: "",
+                                date: dateTimeStr,
+                                formatDate: FormatDate,
+                                infractionCode: "C29",
+                                pointId: "",
+                                panoramicVideo: "",
+                                detailVideo: "",
+                                panoramicPhoto: "",
+                                detailPhoto: pathDetailPhoto,
+                                maxSpeed: max_speed,
+                                capturedSpeed: captured_speed,
+                                useMaxSpeed: true,
+                                commandApplication: this.commandApplication,
+                                documentUploadId: "",
+                                data: stringData
+                                );
+
+                    //agregar el objeto al binding source
+                    bindingSourceDei.Add(d);
 
 
                 }
 
+
+                this.labelTotalFiles.Text = totalFiles.ToString();
+
+                await StoreFileUploadDeiAsync();
+
+            }
+            else
+            {
+                //mensaje de error
+                MessageBox.Show("Error al extraer los archivos de la carpeta " + path + " a " + tempDirectoryName + "out:" + output + " error: " + error, "Error");
+                return;
+
+
             }
 
-
-            this.labelTotalFiles.Text = totalFiles.ToString();
-
-            await StoreFileUploadDeiAsync();
 
 
         }
