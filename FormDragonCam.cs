@@ -522,7 +522,6 @@ namespace TappUploadDei
                         continue;
                     }
 
-
                     int deiIndex = bindingSourceDei.IndexOf(d);
                     d.PointId = point.Id;
                     d.Status = (int)Status.Sending;
