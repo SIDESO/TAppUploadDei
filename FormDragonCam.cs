@@ -20,7 +20,7 @@ namespace TappUploadDei
         int countUpload = 0;
         int countError = 0;
         private HttpClient httpClient = new HttpClient();
-        private readonly string ProductVersionApp = "1.0.0";//Application.ProductVersion.Split("+")[0];
+        private readonly string ProductVersionApp = "1.0.0";
         private readonly string commandApplication = "DC";
         private readonly string AplicationName = "FilesDragonCam";
 
@@ -294,12 +294,12 @@ namespace TappUploadDei
 
             Process process = new Process();
 
-            string basePath = AppDomain.CurrentDomain.BaseDirectory;
+            string appDir = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) ?? "";
 
             //"C:\Users\carlo\OneDrive\Escritorio\C29\Utilities_C29\Utilities_Dragoncam\ImgExtract.exe" "C:\Users\carlo\OneDrive\Escritorio\C29\MuestraDragonCam" "C:\Users\carlo\OneDrive\Escritorio\C29\DesencriptadoCmdDrangonCam" "" """
 
             // Configura el proceso
-            process.StartInfo.FileName = "C:\\SIDESO\\TappUploadDei\\Utilities\\Utilities_Dragoncam\\ImgExtract.exe";  // Nombre del archivo ejecutable (ej: "cmd.exe")
+            process.StartInfo.FileName = appDir + "\\Utilities\\Utilities_Dragoncam\\ImgExtract.exe";  // Nombre del archivo ejecutable (ej: "cmd.exe")
             process.StartInfo.Arguments = "\"" + path + "\"" + " \"" + tempDirectoryName + "\"" + " \"\" \"\"";      // Argumentos a pasar al proceso
             process.StartInfo.UseShellExecute = false;   // Desactiva la shell para poder controlar el proceso
             process.StartInfo.CreateNoWindow = true;      // No crea una ventana para el proceso

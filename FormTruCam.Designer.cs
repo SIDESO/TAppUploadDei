@@ -47,6 +47,7 @@
             labelFilesError = new Label();
             labelErrorsForm = new Label();
             progressBarFilesLoad = new ProgressBar();
+            toolStrip1 = new ToolStrip();
             ((System.ComponentModel.ISupportInitialize)DataGridViewDeis).BeginInit();
             SuspendLayout();
             // 
@@ -133,10 +134,17 @@
             resources.ApplyResources(progressBarFilesLoad, "progressBarFilesLoad");
             progressBarFilesLoad.Name = "progressBarFilesLoad";
             // 
+            // toolStrip1
+            // 
+            toolStrip1.ImageScalingSize = new Size(20, 20);
+            resources.ApplyResources(toolStrip1, "toolStrip1");
+            toolStrip1.Name = "toolStrip1";
+            // 
             // FormTruCam
             // 
             resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(toolStrip1);
             Controls.Add(progressBarFilesLoad);
             Controls.Add(labelErrorsForm);
             Controls.Add(labelFilesError);
@@ -175,5 +183,6 @@
         private Label labelFilesError;
         private Label labelErrorsForm;
         private ProgressBar progressBarFilesLoad;
+        private ToolStrip toolStrip1;
     }
 }
