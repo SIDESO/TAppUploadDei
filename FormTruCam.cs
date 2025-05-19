@@ -330,7 +330,7 @@ namespace TappUploadDei
                     //"C:\Users\carlo\OneDrive\Escritorio\C29\Utilities_C29\Utilities_Trucam\tdw64net.exe" "C:\Users\carlo\OneDrive\Escritorio\C29\Muestra Trucam\1747149347_Nt200_0513_151547.jmx"
 
                     // Configura el proceso
-                    process.StartInfo.FileName = appDir + "\\Utilities\\Utilities_Trucam\\tdw64net.exe";  // Nombre del archivo ejecutable (ej: "cmd.exe")
+                    process.StartInfo.FileName = appDir + "\\Utilities_C29\\Utilities_Trucam\\tdw64net.exe";  // Nombre del archivo ejecutable (ej: "cmd.exe")
                     process.StartInfo.Arguments = "\"" + file + "\"";      // Argumentos a pasar al proceso
                     process.StartInfo.UseShellExecute = false;   // Desactiva la shell para poder controlar el proceso
                     process.StartInfo.CreateNoWindow = true;      // No crea una ventana para el proceso

@@ -73,7 +73,7 @@ namespace TappUploadDei
             {
 
                 // Tells which project in Sentry to send events to:
-                Dsn = "https://e4cdeac9989376f915e74c403ac87363@o4505348454744064.ingest.sentry.io/4505703081443328",
+                Dsn = "https://be7e1f9ea7a96e60480795054b7fabba@o4505348454744064.ingest.us.sentry.io/4509350556925952",
 
                 // When configuring for the first time, to see what the SDK is doing:
                 Debug = true,

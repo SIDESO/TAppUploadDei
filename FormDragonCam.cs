@@ -299,7 +299,7 @@ namespace TappUploadDei
             //"C:\Users\carlo\OneDrive\Escritorio\C29\Utilities_C29\Utilities_Dragoncam\ImgExtract.exe" "C:\Users\carlo\OneDrive\Escritorio\C29\MuestraDragonCam" "C:\Users\carlo\OneDrive\Escritorio\C29\DesencriptadoCmdDrangonCam" "" """
 
             // Configura el proceso
-            process.StartInfo.FileName = appDir + "\\Utilities\\Utilities_Dragoncam\\ImgExtract.exe";  // Nombre del archivo ejecutable (ej: "cmd.exe")
+            process.StartInfo.FileName = appDir + "\\Utilities_C29\\Utilities_Dragoncam\\ImgExtract.exe";  // Nombre del archivo ejecutable (ej: "cmd.exe")
             process.StartInfo.Arguments = "\"" + path + "\"" + " \"" + tempDirectoryName + "\"" + " \"\" \"\"";      // Argumentos a pasar al proceso
             process.StartInfo.UseShellExecute = false;   // Desactiva la shell para poder controlar el proceso
             process.StartInfo.CreateNoWindow = true;      // No crea una ventana para el proceso
